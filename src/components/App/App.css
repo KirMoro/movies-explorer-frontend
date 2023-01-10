@@ -1,0 +1,74 @@
+@import '../../vendor/normalize.css';
+@import '../../vendor/fonts.css';
+
+.page {
+    width: 100%;
+    min-width: 320px;
+    padding: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FAFAFA;
+    color: #000000;
+    font-family: Inter, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    max-width: 1280px;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding: 0;
+    margin: 0;
+}
+
+.button {
+    box-sizing: border-box;
+    width: 76px;
+    height: 32px;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: #3456F3;
+    color: #fff;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
