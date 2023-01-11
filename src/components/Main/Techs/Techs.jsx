@@ -7,7 +7,7 @@ export const Techs = () => {
                 <h2 className="article__title">Технологии</h2>
             </div>
             <section className="techs__main">
-                <h1 className="techs__title">7 технологий</h1>
+                <h2 className="techs__title">7 технологий</h2>
                 <p className="techs__subtitle">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
                 <ul className="techs__navigation">
                     <li>
