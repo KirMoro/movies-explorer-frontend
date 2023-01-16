@@ -3,7 +3,7 @@ import {SearchForm} from "./SearchForm/SearchForm";
 import {MoviesCardList} from "./MoviesCardList/MoviesCardList";
 import {movies} from "../../__fixtures__/movies";
 
-export const Movies = ({children}) => {
+export const Movies = () => {
     return (
         <section className="movies">
             <SearchForm/>

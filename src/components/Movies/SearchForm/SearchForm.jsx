@@ -7,7 +7,20 @@ export const SearchForm = ({children}) => {
                 <fieldset className="search__form_fieldset">
                     <label></label>
                     <input className="search__form_input"/>
-                    <button className="search__form-button"></button>
+                    <button className="search__form-button"
+                            type="submit"
+                            aria-label="Поиск"
+                    ></button>
+                </fieldset>
+                <fieldset className="search__form_fieldset search__form_fieldset_type_switch">
+                    <label className="search__form_label">
+                        Короткометражки
+                    </label>
+                    {/*<label className="search__form_switch"></label>*/}
+                    <input
+                        className="search__form_switch"
+                        type="checkbox"
+                    />
                 </fieldset>
             </form>
 
