@@ -7,6 +7,7 @@ import {Route, Router, Switch} from "react-router-dom";
 import {Movies} from "../Movies/Movies";
 import {SavedMovies} from "../SavedMovies/SavedMovies";
 import {Profile} from "../Profile/Profile";
+import {NotFound} from "../NotFound/NotFound";
 
 function App() {
     return (
@@ -26,6 +27,9 @@ function App() {
                 </Route>
                 <Route path="/profile">
                     <Profile />
+                </Route>
+                <Route path="/404">
+                    <NotFound />
                 </Route>
             </Switch>
             <Footer/>
