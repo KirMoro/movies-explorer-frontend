@@ -18,6 +18,12 @@ function App() {
                 <Navigation/>
             </Header>
             <Switch>
+                <Route path="/signup">
+                    <Register />
+                </Route>
+                <Route path="/signin">
+                    <Login />
+                </Route>
                 {/*<Route path="/">*/}
                 {/*    <Main/>*/}
                 {/*</Route>*/}
@@ -33,12 +39,7 @@ function App() {
                 <Route path="/404">
                     <NotFound />
                 </Route>
-                <Route path="/signup">
-                    <Register />
-                </Route>
-                <Route path="/signin">
-                    <Login />
-                </Route>
+
             </Switch>
             <Footer/>
         </>

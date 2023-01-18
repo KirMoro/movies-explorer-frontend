@@ -4,10 +4,14 @@ import {Link} from "react-router-dom";
 export const Login = () => {
     return (
         <section className="login">
-            <div
-                className="logo"
-                aria-label="Главная страница"
-            />
+            <Link
+                to="/"
+            >
+                <div
+                    className="logo"
+                    aria-label="Главная страница"
+                />
+            </Link>
             <form name="login__form" className="login__form">
                 <h2 className="login__form_title">Рады видеть!</h2>
                 <fieldset className="login__form_fieldset">
@@ -39,7 +43,7 @@ export const Login = () => {
                 <p className="login__form_link_text">
                     Ещё не зарегистрированы?
                     <Link
-                        to="/"
+                        to="/signup"
                         className="login__form_link"
                     >
                         Регистрация
