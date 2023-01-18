@@ -42,6 +42,7 @@
 }
 
 .button_color_blue {
+    margin: 0 0 0 30px;
     background-color: #3456F3;
 }
 
@@ -77,6 +78,17 @@
     cursor: pointer;
     outline: none;
     transition: opacity .5s;
+}
+
+.logo {
+    width: 38px;
+    height: 38px;
+    padding: 18px 0;
+    margin: 0;
+    background-image: url('../../images/header__logo.svg');
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: auto;
 }
 
 .article__header {

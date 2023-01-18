@@ -5,7 +5,7 @@ export const Header = ({children}) => {
     return (
         <header className={classNames('header')}>
             <div
-                className="header__logo"
+                className="logo"
                 aria-label="Главная страница"
             />
             {children}

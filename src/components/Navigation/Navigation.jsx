@@ -6,6 +6,16 @@ export const Navigation = () => {
 
     return (
         <nav className="navigation">
+            {location.pathname === '/' && (
+                <>
+                    <ul className="navigation__list">
+                        <li className="navigation__link">Регистрация</li>
+                    </ul>
+                    <button className="button button_color_blue">
+                        Войти
+                    </button>
+                </>
+            )}
             {(location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile') && (
                 <ul className="navigation__list">
                     <li className="navigation__link">Фильмы</li>
