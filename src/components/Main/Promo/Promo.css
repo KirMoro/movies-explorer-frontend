@@ -52,3 +52,16 @@
         margin: 0 0 314px 0;
     }
 }
+
+@media screen and (max-width: 760px) {
+    .promo {
+        padding: 220px 0 0 0;
+    }
+
+    .promo__title {
+        width: 292px;
+        font-size: 29px;
+        line-height: 37px;
+        margin: 0 0 217px 0;
+    }
+}

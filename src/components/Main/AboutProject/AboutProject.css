@@ -33,7 +33,6 @@
     'progress_bar_backend progress_bar_frontend';
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 36px;
-
 }
 
 .about-project__progress-bar-column {
@@ -88,5 +87,33 @@
     .about-project__text {
         font-size: 12px;
         line-height: 18px;    }
+}
+
+@media screen and (max-width: 760px) {
+    .about-project__title {
+        font-size: 18px;
+        line-height: 22px;
+        padding: 0;
+        margin: 0 0 16px 0;
+    }
+
+    .about-project__text {
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .about-project__progress-bar {
+        grid-template-columns: 2fr 4fr;
+    }
+
+    .about-project__progress-bar-text {
+        font-size: 11px;
+        line-height: 13px;
+    }
+    
+    .about-project__progress-bar-subtext {
+        font-size: 11px;
+        line-height: 13px;
+    }
 }
 
