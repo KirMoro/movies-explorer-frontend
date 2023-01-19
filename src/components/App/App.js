@@ -3,7 +3,7 @@ import {Header} from "../Header/Header";
 import {Navigation} from "../Navigation/Navigation";
 import {Main} from "../Main/Main";
 import {Footer} from "../Footer/Footer";
-import {Route, Router, Switch} from "react-router-dom";
+import {Route, Switch, useRouteMatch} from "react-router-dom";
 import {Movies} from "../Movies/Movies";
 import {SavedMovies} from "../SavedMovies/SavedMovies";
 import {Profile} from "../Profile/Profile";
@@ -12,11 +12,23 @@ import {Register} from "../Register/Register";
 import {Login} from "../Login/Login";
 
 function App() {
+
+    const pathsWithoutHeaderArr = [
+        '/signup',
+        '/signin',
+    ];
+
+    const pathsWithoutFooterArr = [
+        '/profile',
+        '/signup',
+        '/signin',
+    ];
+
     return (
         <>
-            <Header>
+            {useRouteMatch(pathsWithoutHeaderArr) ? null : (<Header>
                 <Navigation/>
-            </Header>
+            </Header>)}
             <Switch>
                 <Route path="/signup">
                     <Register />
@@ -24,9 +36,9 @@ function App() {
                 <Route path="/signin">
                     <Login />
                 </Route>
-                {/*<Route path="/">*/}
-                {/*    <Main/>*/}
-                {/*</Route>*/}
+                <Route exact path="/">
+                    <Main/>
+                </Route>
                 <Route path="/movies">
                     <Movies/>
                 </Route>
@@ -36,12 +48,11 @@ function App() {
                 <Route path="/profile">
                     <Profile />
                 </Route>
-                <Route path="/404">
+                <Route path="/*">
                     <NotFound />
                 </Route>
-
             </Switch>
-            <Footer/>
+            {useRouteMatch(pathsWithoutFooterArr) ? null : (<Footer/>)}
         </>
     );
 }

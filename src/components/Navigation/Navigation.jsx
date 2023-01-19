@@ -1,5 +1,6 @@
 import './Navigation.css';
 import {Link, useLocation} from "react-router-dom";
+import {useState} from "react";
 
 export const Navigation = () => {
     const location = useLocation();
@@ -25,20 +26,21 @@ export const Navigation = () => {
                 </>
             )}
             {(location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile') && (
-                <ul className="navigation__list">
-                    <li>
-                        <Link to="/movies"
-                              className="navigation__link"
-                        >
-                            Фильмы
-                        </Link>
+                <>
+                    <ul className="navigation__list navigation__list_type_movies">
+                        <li>
+                            <Link to="/movies"
+                                  className="navigation__link"
+                            >
+                                Фильмы
+                            </Link>
                         </li>
-                    <li>
-                        <Link to="/saved-movies"
-                              className="navigation__link"
-                        >
-                            Сохранённые фильмы
-                        </Link>
+                        <li>
+                            <Link to="/saved-movies"
+                                  className="navigation__link"
+                            >
+                                Сохранённые фильмы
+                            </Link>
                         </li>
                         <Link
                             to="/profile"
@@ -46,7 +48,13 @@ export const Navigation = () => {
                             Аккаунт
                             <span className="button__icon"></span>
                         </Link>
-                </ul>
+                    </ul>
+                    <button className="navigation__burger-button"
+
+                    >
+                    </button>
+                </>
+
             )}
         </nav>
     );

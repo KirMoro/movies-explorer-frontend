@@ -1,5 +1,7 @@
 .about-project {
-    padding: 110px 70px;
+    width: 90%;
+    padding: 110px 0;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
 }
@@ -29,13 +31,12 @@
     grid-template-areas:
     'progress_bar_blue progress_bar_gray'
     'progress_bar_backend progress_bar_frontend';
-    grid-template-columns: 228px 912px;
+    grid-template-columns: 1fr 4fr;
     grid-template-rows: 36px;
 
 }
 
 .about-project__progress-bar-column {
-    /*height: 36px;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,3 +83,10 @@
 .about-project__progress-bar_type_frontend {
     grid-area: progress_bar_frontend;
 }
+
+@media screen and (max-width: 950px) {
+    .about-project__text {
+        font-size: 12px;
+        line-height: 18px;    }
+}
+

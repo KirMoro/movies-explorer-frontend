@@ -42,6 +42,12 @@
     color: #fff;
     text-decoration: none;
     text-align: center;
+    opacity: 1;
+    transition: opacity .3s;
+}
+
+.button:hover {
+    opacity: .8;
 }
 
 .button_color_blue {
