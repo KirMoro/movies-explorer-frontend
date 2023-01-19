@@ -4,7 +4,7 @@ export const SearchForm = ({children}) => {
     return (
         <article className="search">
             <form className="search__form">
-                <fieldset className="search__form_fieldset">
+                <fieldset className="search__form_fieldset search__form_fieldset_type_input">
                     <label></label>
                     <input className="search__form_input"/>
                     <button className="search__form-button"

@@ -34,3 +34,9 @@
     padding: 0;
     margin: 0 0 60px 0;
 }
+
+@media screen and (max-width: 769px) {
+    .notfound {
+        margin: 408px 0 0 0;
+    }
+}

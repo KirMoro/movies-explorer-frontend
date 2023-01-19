@@ -2,7 +2,7 @@ import './Navigation.css';
 import {Link, useLocation} from "react-router-dom";
 import {useState} from "react";
 
-export const Navigation = () => {
+export const Navigation = ({onOpenMenu}) => {
     const location = useLocation();
 
     return (
@@ -49,12 +49,12 @@ export const Navigation = () => {
                             <span className="button__icon"></span>
                         </Link>
                     </ul>
-                    <button className="navigation__burger-button"
-
+                    <button
+                        className="navigation__burger-button"
+                        onClick={onOpenMenu}
                     >
                     </button>
                 </>
-
             )}
         </nav>
     );

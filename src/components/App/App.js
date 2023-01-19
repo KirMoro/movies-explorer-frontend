@@ -10,8 +10,15 @@ import {Profile} from "../Profile/Profile";
 import {NotFound} from "../NotFound/NotFound";
 import {Register} from "../Register/Register";
 import {Login} from "../Login/Login";
+import {Menu} from "../Menu/Menu";
+import {useState} from "react";
 
 function App() {
+    const [isMenuOpen, setMenuOpen] = useState(false);
+
+    const closeAllPopups = () => {
+        setMenuOpen(false);
+    };
 
     const pathsWithoutHeaderArr = [
         '/signup',
@@ -27,7 +34,9 @@ function App() {
     return (
         <>
             {useRouteMatch(pathsWithoutHeaderArr) ? null : (<Header>
-                <Navigation/>
+                <Navigation
+                    onOpenMenu={setMenuOpen}
+                />
             </Header>)}
             <Switch>
                 <Route path="/signup">
@@ -53,6 +62,10 @@ function App() {
                 </Route>
             </Switch>
             {useRouteMatch(pathsWithoutFooterArr) ? null : (<Footer/>)}
+            <Menu
+                isOpen={isMenuOpen}
+                onClose={closeAllPopups}
+                />
         </>
     );
 }

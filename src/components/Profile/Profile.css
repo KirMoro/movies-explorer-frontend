@@ -72,6 +72,25 @@
     margin: 0 0 16px 0;
 }
 
+.profile__form_button_type_active {
+    width: 410px;
+    height: 45px;
+    color: white;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    border: none;
+    border-radius: 3px;
+    background: #3456F3;
+    cursor: pointer;
+    margin: 0 0 16px 0;
+}
+
+.profile__form_button_type_disabled {
+    background: #F8F8F8;
+    color: #C2C2C2;
+}
+
 .profile__form_link {
     font-style: normal;
     font-weight: 500;
@@ -81,4 +100,20 @@
     line-height: 16px;
     color: #EE3465;
     text-decoration: none;
+}
+
+
+@media screen and (max-width: 769px) {
+    .profile {
+        margin: 236px 0 0 0;
+    }
+
+    .profile__form_title {
+        margin: 0 0 96px 0;
+    }
+
+    .profile__form_fieldset {
+        margin: 0 0 210px 0;
+    }
+
 }

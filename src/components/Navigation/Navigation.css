@@ -20,6 +20,14 @@
     display: flex;
 }
 
+.navigation__list_type_popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 159px 0 621px 0;
+    gap: 28px;
+}
+
 .navigation__link {
     padding: 0;
     margin: 0;
@@ -30,6 +38,15 @@
     text-decoration: none;
     opacity: 1;
     transition: opacity .3s;
+}
+
+.navigation__link_type_popup {
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.navigation__link_type_popup:active {
+    border-bottom: 2px solid #000000;
 }
 
 .navigation__link:hover {
@@ -51,7 +68,7 @@
     background-color: transparent;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 769px) {
     .navigation__list_type_movies {
         display: none;
     }

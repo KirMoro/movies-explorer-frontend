@@ -71,6 +71,11 @@
     margin: 0 0 0 50px;
 }
 
+.button_color_white_type_popup {
+    padding: 0;
+    margin: 0;
+}
+
 .button__icon {
     position: absolute;
     top: 3px;

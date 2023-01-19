@@ -97,3 +97,10 @@
     padding: 0;
     margin: 0;
 }
+
+
+@media screen and (max-width: 769px) {
+    .login {
+        margin: 232px 0 0 0;
+    }
+}
