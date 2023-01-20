@@ -1,10 +1,9 @@
 import './Header.css';
-import classNames from 'classnames';
 import {Link} from "react-router-dom";
 
 export const Header = ({children}) => {
     return (
-        <header className={classNames('header')}>
+        <header className='header'>
             <Link
                 to="/"
                 >
