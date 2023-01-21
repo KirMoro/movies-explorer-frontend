@@ -11,10 +11,10 @@ export const MoviesCard = ({movie,
     }
 
     return (
-        <article className="moviescard">
+        <li className="moviescard">
             <img className="moviescard__image" src={movie.image} alt={movie.nameRU} />
             <div className="moviescard__text">
-                <h2 className="moviecard__title">{movie.nameRU}</h2>
+                <h2 className="moviescard__title">{movie.nameRU}</h2>
                 <p className="moviescard__duration">{convertMinutesToHours(movie.duration)}</p>
                 <button
                     type="button"
@@ -22,6 +22,6 @@ export const MoviesCard = ({movie,
                     aria-label="Понравилось"
                 />
             </div>
-        </article>
+        </li>
     );
 };

@@ -32,7 +32,7 @@
   white-space: nowrap;
 }
 
-.moviecard__title {
+.moviescard__title {
   overflow: hidden;
   max-width: 190px;
   padding: 16px 0 17px 16px;

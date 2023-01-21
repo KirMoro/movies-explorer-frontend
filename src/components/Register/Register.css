@@ -10,7 +10,7 @@
   flex-direction: column;
 }
 
-.register__form_title {
+.register__form-title {
   padding: 0;
   margin: 40px 0;
   font-size: 24px;
@@ -19,7 +19,7 @@
   text-align: left;
 }
 
-.register__form_fieldset {
+.register__form-fieldset {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -28,13 +28,13 @@
   margin: 0 0 69px;
 }
 
-.register__form_label {
+.register__form-label {
   display: flex;
   flex-direction: column;
   margin: 0 0 24px;
 }
 
-.register__form_text {
+.register__form-text {
   padding: 0;
   margin: 0 0 5px;
   color: #a0a0a0;
@@ -43,7 +43,7 @@
   line-height: 12px;
 }
 
-.register__form_input {
+.register__form-input {
   box-sizing: border-box;
   padding: 0 0 10px;
   border: none;
@@ -57,11 +57,11 @@
   text-align: left;
 }
 
-.register__form_input:focus {
+.register__form-input:focus {
   border-bottom: 1px solid #3456f3;
 }
 
-.register__form_button {
+.register__form-button {
   width: 396px;
   height: 45px;
   border: none;
@@ -75,7 +75,7 @@
   line-height: 17px;
 }
 
-.register__form_link {
+.register__form-link {
   padding: 0;
   margin: 0 0 0 6px;
   color: #3456f3;
@@ -87,7 +87,7 @@
   text-decoration: none;
 }
 
-.register__form_link_text {
+.register__form-link-text {
   padding: 0;
   margin: 0;
   color: #a0a0a0;
@@ -114,7 +114,7 @@
     width: 90%;
   }
 
-  .register__form_button {
+  .register__form-button {
     width: 260px;
   }
 }

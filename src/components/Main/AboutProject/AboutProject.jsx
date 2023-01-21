@@ -2,7 +2,7 @@ import './AboutProject.css';
 
 export const AboutProject = () => {
     return (
-        <article className="about-project">
+        <article className="article about-project">
             <div className="article__header">
                 <h2 className="article__title">О проекте</h2>
             </div>
@@ -19,18 +19,18 @@ export const AboutProject = () => {
                 </div>
             </section>
             <section className="about-project__progress-bar">
-                <div className="about-project__progress-bar-column about-project__progress-bar_color_blue">
+                <div className="about-project__progress-bar-column about-project__progress-bar-column_color_blue">
                     <p className="about-project__progress-bar-text about-project__progress-bar-text_color_white">1
                         неделя</p>
                 </div>
-                <div className="about-project__progress-bar-column about-project__progress-bar_color_gray">
+                <div className="about-project__progress-bar-column about-project__progress-bar-column_color_gray">
                     <p className="about-project__progress-bar-text about-project__progress-bar-text_color_black">4
                         недели</p>
                 </div>
-                <div className="about-project__progress-bar-column about-project__progress-bar_type_backend">
+                <div className="about-project__progress-bar-column about-project__progress-bar-column_type_backend">
                     <p className="about-project__progress-bar-text">Back-end</p>
                 </div>
-                <div className="about-project__progress-bar-column about-project__progress-bar_type_frontend">
+                <div className="about-project__progress-bar-column about-project__progress-bar-column_type_frontend">
                     <p className="about-project__progress-bar-subtext ">Front-end</p>
                 </div>
             </section>

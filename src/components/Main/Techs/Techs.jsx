@@ -2,7 +2,7 @@ import './Techs.css';
 
 export const Techs = () => {
     return (
-        <article className="techs">
+        <article className="article techs">
             <div className="article__header">
                 <h2 className="article__title">Технологии</h2>
             </div>

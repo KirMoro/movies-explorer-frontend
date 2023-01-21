@@ -1,12 +1,11 @@
 import './Menu.css';
-import {Navigation} from "../Navigation/Navigation";
 import classNames from "classnames";
 import {Link} from "react-router-dom";
 
 export const Menu = ({isOpen, onClose}) => {
     return (
         <div className={classNames('menu', { menu_opened: isOpen })}>
-            <div className="menu__container">
+            <div className="navigation navigation_type_popup">
                 <ul className="navigation__list navigation__list_type_popup">
                     <li>
                         <Link to="/"

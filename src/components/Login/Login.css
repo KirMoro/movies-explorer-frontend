@@ -10,7 +10,7 @@
   flex-direction: column;
 }
 
-.login__form_title {
+.login__form-title {
   padding: 0;
   margin: 40px 0;
   font-size: 24px;
@@ -19,7 +19,7 @@
   text-align: left;
 }
 
-.login__form_fieldset {
+.login__form-fieldset {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -28,13 +28,13 @@
   margin: 0 0 179px;
 }
 
-.login__form_label {
+.login__form-label {
   display: flex;
   flex-direction: column;
   margin: 0 0 24px;
 }
 
-.login__form_text {
+.login__form-text {
   padding: 0;
   margin: 0 0 5px;
   color: #a0a0a0;
@@ -43,7 +43,7 @@
   line-height: 12px;
 }
 
-.login__form_input {
+.login__form-input {
   box-sizing: border-box;
   padding: 0 0 10px;
   border: none;
@@ -57,11 +57,11 @@
   text-align: left;
 }
 
-.login__form_input:focus {
+.login__form-input:focus {
   border-bottom: 1px solid #3456f3;
 }
 
-.login__form_button {
+.login__form-button {
   width: 396px;
   height: 45px;
   border: none;
@@ -75,7 +75,7 @@
   line-height: 17px;
 }
 
-.login__form_link {
+.login__form-link {
   padding: 0;
   margin: 0 0 0 6px;
   color: #3456f3;
@@ -87,7 +87,7 @@
   text-decoration: none;
 }
 
-.login__form_link_text {
+.login__form-link-text {
   padding: 0;
   margin: 0;
   color: #a0a0a0;
@@ -114,7 +114,7 @@
     width: 90%;
   }
 
-  .login__form_button {
+  .login__form-button {
     width: 260px;
   }
 }

@@ -3,7 +3,6 @@
   width: 90%;
   flex-direction: column;
   padding: 110px 0;
-  margin: 0 auto;
 }
 
 .about-project__title {
@@ -41,12 +40,12 @@
   justify-content: center;
 }
 
-.about-project__progress-bar_color_blue {
+.about-project__progress-bar-column_color_blue {
   background-color: #3456f3;
   grid-area: progress_bar_blue;
 }
 
-.about-project__progress-bar_color_gray {
+.about-project__progress-bar-column_color_gray {
   background-color: #f2f2f2;
   grid-area: progress_bar_gray;
 }
@@ -75,11 +74,11 @@
   color: #fff;
 }
 
-.about-project__progress-bar_type_backend {
+.about-project__progress-bar-column_type_backend {
   grid-area: progress_bar_backend;
 }
 
-.about-project__progress-bar_type_frontend {
+.about-project__progress-bar-column_type_frontend {
   grid-area: progress_bar_frontend;
 }
 

@@ -13,29 +13,29 @@ export const Register = () => {
                 />
             </Link>
             <form name="register__form" className="register__form">
-                <h2 className="register__form_title">Добро пожаловать!</h2>
-                <fieldset className="register__form_fieldset">
-                    <label className="register__form_label">
-                        <span className="register__form_text">
+                <h2 className="register__form-title">Добро пожаловать!</h2>
+                <fieldset className="register__form-fieldset">
+                    <label className="register__form-label">
+                        <span className="register__form-text">
                             Имя
                         </span>
-                        <input className="register__form_input"
+                        <input className="register__form-input"
                                value={'Виталий'}
                         />
                     </label>
-                    <label className="register__form_label">
-                        <span className="register__form_text">
+                    <label className="register__form-label">
+                        <span className="register__form-text">
                             E-mail
                         </span>
-                        <input className="register__form_input"
+                        <input className="register__form-input"
                                value={'pochta@yandex.ru'}
                         />
                     </label>
-                    <label className="register__form_label">
-                        <span className="register__form_text">
+                    <label className="register__form-label">
+                        <span className="register__form-text">
                             Пароль
                         </span>
-                        <input className="register__form_input"
+                        <input className="register__form-input"
                                value={'pochta@yandex.ru'}
                         />
                     </label>
@@ -44,16 +44,16 @@ export const Register = () => {
                 <button
                     type="submit"
                     // onClick={onSubmit}
-                    className="register__form_button"
+                    className="register__form-button"
                     // aria-label={ariaLabel}
                 >
                     Редактировать
                 </button>
-                <p className="register__form_link_text">
+                <p className="register__form-link-text">
                     Уже зарегистрированы?
                     <Link
                         to="/signin"
-                        className="register__form_link"
+                        className="register__form-link"
                     >
                         Войти
                     </Link>

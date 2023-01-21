@@ -105,6 +105,10 @@
   background-size: auto;
 }
 
+.article {
+  margin: 0 auto;
+}
+
 .article__header {
   border-bottom: 1px solid #000;
 }
