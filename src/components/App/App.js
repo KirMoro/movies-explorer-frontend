@@ -1,5 +1,7 @@
 import './App.css';
 import {Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
+import { AppContext } from '../../contexts/AppContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useState } from 'react';
 import { Header } from '../Header/Header';
 import { Navigation } from '../Navigation/Navigation';
@@ -13,12 +15,14 @@ import { Register } from '../Register/Register';
 import { Login } from '../Login/Login';
 import { Menu } from '../Menu/Menu';
 import {apiAuth} from "../../utils/apiAuth";
+import {apiMovies} from "../../utils/MoviesApi";
 
 function App() {
   const [loggedIn, setLogin] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
-  const history = useHistory();
+    const history = useHistory();
 
   const closeAllPopups = () => {
     setMenuOpen(false);
@@ -49,9 +53,7 @@ function App() {
   function handleLogin(loginData) {
     apiAuth.login(loginData)
         .then((token) => {
-          console.log(data)
           setLogin(!loggedIn);
-          console.log('loggedin', loggedIn)
           localStorage.setItem('token', token);
           // api.getToken(data.token);
           history.push('/');
@@ -60,6 +62,8 @@ function App() {
           console.log(err);
         });
   }
+
+  // console.log(apiMovies.getMovies())
 
   // Проверка токена авторизации
   function tokenCheck() {
@@ -78,49 +82,52 @@ function App() {
     }
   }
 
-
   return (
-    <>
-      {useRouteMatch(pathsWithoutHeaderArr) ? null : (
-        <Header>
-          <Navigation
-            onOpenMenu={setMenuOpen}
-          />
-        </Header>
-      )}
-      <Switch>
-        <Route path="/signup">
-          <Register
-              onRegister={handleRegistration}
-          />
-        </Route>
-        <Route path="/signin">
-          <Login
-          onLogin={handleLogin}
-          />
-        </Route>
-        <Route exact path="/">
-          <Main />
-        </Route>
-        <Route path="/movies">
-          <Movies />
-        </Route>
-        <Route path="/saved-movies">
-          <SavedMovies />
-        </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
-        <Route path="/*">
-          <NotFound />
-        </Route>
-      </Switch>
-      {useRouteMatch(pathsWithoutFooterArr) ? null : (<Footer />)}
-      <Menu
-        isOpen={isMenuOpen}
-        onClose={closeAllPopups}
-      />
-    </>
+      <AppContext.Provider value={{ loggedIn, setLogin }}>
+          <CurrentUserContext.Provider value={currentUser}>
+              <>
+                  {useRouteMatch(pathsWithoutHeaderArr) ? null : (
+                      <Header>
+                          <Navigation
+                              onOpenMenu={setMenuOpen}
+                          />
+                      </Header>
+                  )}
+                  <Switch>
+                      <Route path="/signup">
+                          <Register
+                              onRegister={handleRegistration}
+                          />
+                      </Route>
+                      <Route path="/signin">
+                          <Login
+                              onLogin={handleLogin}
+                          />
+                      </Route>
+                      <Route exact path="/">
+                          <Main />
+                      </Route>
+                      <Route path="/movies">
+                          <Movies />
+                      </Route>
+                      <Route path="/saved-movies">
+                          <SavedMovies />
+                      </Route>
+                      <Route path="/profile">
+                          <Profile />
+                      </Route>
+                      <Route path="/*">
+                          <NotFound />
+                      </Route>
+                  </Switch>
+                  {useRouteMatch(pathsWithoutFooterArr) ? null : (<Footer />)}
+                  <Menu
+                      isOpen={isMenuOpen}
+                      onClose={closeAllPopups}
+                  />
+              </>
+          </CurrentUserContext.Provider>
+      </AppContext.Provider>
   );
 }
 
