@@ -63,8 +63,6 @@ function App() {
         });
   }
 
-  // console.log(apiMovies.getMovies())
-
   // Проверка токена авторизации
   function tokenCheck() {
     const token = localStorage.getItem('token');

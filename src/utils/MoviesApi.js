@@ -1,8 +1,8 @@
-class ApiAuth {
+class MoviesApi {
     constructor(options) {
         this._baseUrl = options.baseUrl;
         this._content_type = 'application/json';
-        this._fetch = (link, method = 'GET', body = undefined) => fetch(`${this._baseUrl}/${link}`, {
+        this._fetch = (link, method = 'GET', body = undefined) => fetch(`${this._baseUrl}`, {
             method: method,
             headers: {
                 'content-type': this._content_type
@@ -51,6 +51,6 @@ class ApiAuth {
     }
 }
 
-export const apiMovies = new ApiAuth({
+export const apiMovies = new MoviesApi({
     baseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
 });
