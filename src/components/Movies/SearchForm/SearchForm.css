@@ -58,7 +58,12 @@
   background-repeat: no-repeat;
   cursor: pointer;
   outline: none;
+  opacity: 1;
   transition: opacity .5s;
+}
+
+.search__form-button:hover {
+  opacity: .8;
 }
 
 .search__form-label {

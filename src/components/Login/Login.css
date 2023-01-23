@@ -107,7 +107,7 @@
 @media screen and (max-width: 650px) {
   .login {
     align-items: center;
-    margin: 232px 0 0;
+    margin: 56px 0 0 0;
   }
 
   .login__form {
@@ -116,5 +116,9 @@
 
   .login__form-button {
     width: 260px;
+  }
+
+  .login__form-title {
+    text-align: center;
   }
 }

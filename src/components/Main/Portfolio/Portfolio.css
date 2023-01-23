@@ -35,6 +35,7 @@
   letter-spacing: -.04em;
   line-height: 50px;
   text-decoration: none;
+  color: #000000;
 }
 
 .portfolio__link::after {
