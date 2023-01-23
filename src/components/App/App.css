@@ -1,0 +1,143 @@
+@import url('../../vendor/normalize.css');
+@import url('../../vendor/fonts.css');
+
+.page {
+  display: flex;
+  width: 100%;
+  min-width: 320px;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0 auto;
+  background-color: #fafafa;
+  color: #000;
+  font-family: Inter, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  max-width: 1280px;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding: 0;
+  margin: 0;
+}
+
+.button {
+  width: 76px;
+  height: 32px;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  margin: 0;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 32px;
+  opacity: 1;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity .3s;
+}
+
+.button:hover {
+  opacity: .8;
+}
+
+.button_color_blue {
+  margin: 0 0 0 30px;
+  background-color: #3456f3;
+}
+
+.button_color_gray {
+  background-color: #e8e8e8;
+  color: #000;
+}
+
+.button_color_white {
+  position: relative;
+  width: 100px;
+  padding: 0 30px 0 0;
+  border-radius: 40px;
+  margin: 0 0 0 50px;
+  background-color: #fafafa;
+  box-shadow: 0 3px 14px rgb(0 0 0 / 8%);
+  color: #000;
+}
+
+.button_color_white_type_popup {
+  padding: 0;
+  margin: 0;
+}
+
+.button__icon {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 50%;
+  margin: 0;
+  background-color: #f4f4f4;
+  background-image: url('../../images/button__icon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  outline: none;
+  transition: opacity .5s;
+}
+
+.logo {
+  width: 38px;
+  height: 38px;
+  padding: 18px 0;
+  margin: 0;
+  background-image: url('../../images/header__logo.svg');
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.article {
+  margin: 0 auto;
+}
+
+.article__header {
+  border-bottom: 1px solid #000;
+}
+
+.article__title {
+  padding: 0;
+  margin: 0 0 23px;
+  color: #000;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -.04em;
+  line-height: 27px;
+}
+
+.two-columns {
+  display: flex;
+  padding: 70px 0 110px;
+  gap: 40px;
+}
+
+@media screen and (max-width: 760px) {
+  .article__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .two-columns {
+    flex-direction: column;
+    padding: 60px 0;
+    gap: 56px;
+  }
+}
