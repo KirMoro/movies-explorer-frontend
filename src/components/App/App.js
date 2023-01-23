@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import {Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
 import { useState } from 'react';
 import { Header } from '../Header/Header';
 import { Navigation } from '../Navigation/Navigation';
@@ -12,9 +12,13 @@ import { NotFound } from '../NotFound/NotFound';
 import { Register } from '../Register/Register';
 import { Login } from '../Login/Login';
 import { Menu } from '../Menu/Menu';
+import {apiAuth} from "../../utils/apiAuth";
 
 function App() {
+  const [loggedIn, setLogin] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const history = useHistory();
 
   const closeAllPopups = () => {
     setMenuOpen(false);
@@ -31,6 +35,50 @@ function App() {
     '/signin',
   ];
 
+  // Регистрация пользователя
+  function handleRegistration(registrationData) {
+    apiAuth.register(registrationData)
+        .then(() => {
+          history.push('/signin');
+        }).catch((err) => {
+          console.log(err)
+    });
+  }
+
+  // Авторизация пользователя
+  function handleLogin(loginData) {
+    apiAuth.login(loginData)
+        .then((token) => {
+          console.log(data)
+          setLogin(!loggedIn);
+          console.log('loggedin', loggedIn)
+          localStorage.setItem('token', token);
+          // api.getToken(data.token);
+          history.push('/');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }
+
+  // Проверка токена авторизации
+  function tokenCheck() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      api.getToken(token);
+      apiAuth.getTokenValid(token)
+          .then((data) => {
+            setLogin(!loggedIn);
+            setUserEmail(data.email);
+            history.push('/');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
+  }
+
+
   return (
     <>
       {useRouteMatch(pathsWithoutHeaderArr) ? null : (
@@ -42,10 +90,14 @@ function App() {
       )}
       <Switch>
         <Route path="/signup">
-          <Register />
+          <Register
+              onRegister={handleRegistration}
+          />
         </Route>
         <Route path="/signin">
-          <Login />
+          <Login
+          onLogin={handleLogin}
+          />
         </Route>
         <Route exact path="/">
           <Main />
