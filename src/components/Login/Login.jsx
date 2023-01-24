@@ -84,14 +84,22 @@ export const Login = ({ onLogin }) => {
                         ) : null}
                     </label>
                 </fieldset>
-                <button
+                {(!form.email || !form.password || errors.password.dirty && errors.password.error || errors.email.dirty && errors.email.error) ? (
+                    <button
+                        type="submit"
+                        className="login__form-button"
+                        aria-label="submit-button"
+                        disabled={true}
+                    >
+                        Войти
+                    </button>
+                ) : <button
                     type="submit"
-                    // onClick={onSubmit}
                     className="login__form-button"
-                    // aria-label={ariaLabel}
+                    aria-label="submit-button"
                 >
                     Войти
-                </button>
+                </button>}
                 <p className="login__form-link-text">
                     Ещё не зарегистрированы?
                     <Link

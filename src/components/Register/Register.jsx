@@ -3,17 +3,17 @@ import {Link} from "react-router-dom";
 import {useState} from "react";
 import {useFormValidation} from "../hooks/useFormValidation";
 
-export const Register = ({ onRegister }) => {
+export const Register = ({onRegister}) => {
     const [form, setForm] = useState({
         name: "",
         email: "",
         password: "",
     });
 
-    const { errors, validateForm, onBlurField } = useFormValidation(form);
+    const {errors, validateForm, onBlurField} = useFormValidation(form);
 
     const handleChange = e => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         const nextFormState = {
             ...form,
             [name]: value,
@@ -103,15 +103,23 @@ export const Register = ({ onRegister }) => {
                             <p className="login__form-error">{errors.password.message}</p>
                         ) : null}
                     </label>
-
                 </fieldset>
-                <button
+                {(!form.name || !form.email || !form.password || errors.password.dirty && errors.password.error || errors.email.dirty && errors.email.error || errors.name.dirty && errors.name.error) ? (
+                    <button
+                        type="submit"
+                        className="register__form-button"
+                        aria-label="submit-button"
+                        disabled={true}
+                    >
+                        Редактировать
+                    </button>
+                ) : <button
                     type="submit"
                     className="register__form-button"
                     aria-label="submit-button"
                 >
                     Редактировать
-                </button>
+                </button>}
                 <p className="register__form-link-text">
                     Уже зарегистрированы?
                     <Link

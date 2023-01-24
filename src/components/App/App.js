@@ -76,7 +76,7 @@ function App() {
         apiMain.getTokenValid(token)
           .then((data) => {
             setLogin(!loggedIn);
-            // history.push('/');
+            // history.push('/movies');
           })
           .catch((err) => {
             console.log(err);
