@@ -75,7 +75,7 @@ function App() {
         apiMain.getToken(token);
         apiMain.getTokenValid(token)
           .then((data) => {
-            // setLogin(!loggedIn);
+            setLogin(!loggedIn);
             // history.push('/');
           })
           .catch((err) => {
