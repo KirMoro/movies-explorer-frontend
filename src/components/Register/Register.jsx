@@ -1,18 +1,16 @@
 import './Register.css';
 import {Link} from "react-router-dom";
 import {useState} from "react";
-import {useLoginFormValidation} from "../hooks/useLoginFormValidation";
-import {useRegisterFormValidation} from "../hooks/useRegisterFormValidation";
+import {useFormValidation} from "../hooks/useFormValidation";
 
 export const Register = ({ onRegister }) => {
-    // const [values, setValues] = useState({});
     const [form, setForm] = useState({
         name: "",
         email: "",
         password: "",
     });
 
-    const { errors, validateForm, onBlurField } = useRegisterFormValidation(form);
+    const { errors, validateForm, onBlurField } = useFormValidation(form);
 
     const handleChange = e => {
         const { name, value } = e.target;

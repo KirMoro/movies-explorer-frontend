@@ -26,3 +26,10 @@ export const passwordValidator = password => {
     }
     return "";
 };
+
+export const searchValidator = request => {
+    if (!request) {
+        return "Нужно ввести ключевое слово";
+}
+    return "";
+}

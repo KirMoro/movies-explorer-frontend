@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 import {
+    nameValidator,
     emailValidator,
     passwordValidator,
+    searchValidator,
 } from "../../utils/validators";
 
 const touchErrors = errors => {
@@ -15,14 +17,24 @@ const touchErrors = errors => {
     }, {});
 };
 
-export const useLoginFormValidation = form => {
+export const useFormValidation = form => {
     const [errors, setErrors] = useState({
+        name: {
+            dirty: false,
+            error: false,
+            message: "",
+        },
         email: {
             dirty: false,
             error: false,
             message: "",
         },
         password: {
+            dirty: false,
+            error: false,
+            message: "",
+        },
+        request: {
             dirty: false,
             error: false,
             message: "",
@@ -38,7 +50,14 @@ export const useLoginFormValidation = form => {
             nextErrors = touchErrors(errors);
         }
 
-        const { email, password } = form;
+        const { name, email, password, request } = form;
+
+        if (nextErrors.name.dirty && (field ? field === "name" : true)) {
+            const nameMessage = nameValidator(email, form);
+            nextErrors.name.error = !!nameMessage;
+            nextErrors.name.message = nameMessage;
+            if (!!nameMessage) isValid = false;
+        }
 
         if (nextErrors.email.dirty && (field ? field === "email" : true)) {
             const emailMessage = emailValidator(email, form);
@@ -52,6 +71,13 @@ export const useLoginFormValidation = form => {
             nextErrors.password.error = !!passwordMessage;
             nextErrors.password.message = passwordMessage;
             if (!!passwordMessage) isValid = false;
+        }
+
+        if (nextErrors.request.dirty && (field ? field === "request" : true)) {
+            const requestMessage = searchValidator(request, form);
+            nextErrors.request.error = !!requestMessage;
+            nextErrors.request.message = requestMessage;
+            if (!!requestMessage) isValid = false;
         }
 
         setErrors(nextErrors);

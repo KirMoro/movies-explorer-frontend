@@ -1,15 +1,14 @@
 import './Login.css';
 import {Link} from "react-router-dom";
 import {useState} from "react";
-import {useLoginFormValidation} from "../hooks/useLoginFormValidation";
+import {useFormValidation} from "../hooks/useFormValidation";
 
 export const Login = ({ onLogin }) => {
     const [form, setForm] = useState({
         email: "",
         password: "",
     });
-
-    const { errors, validateForm, onBlurField } = useLoginFormValidation(form);
+    const { errors, validateForm, onBlurField } = useFormValidation(form);
 
     const handleChange = e => {
         const { name, value } = e.target;
