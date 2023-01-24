@@ -64,14 +64,28 @@
   text-align: right;
 }
 
+.profile__form-input::placeholder {
+  color: black;
+}
+
 .profile__form-button {
+  width: 396px;
+  height: 45px;
   border: none;
+  border-radius: 3px;
   margin: 0 0 16px;
-  background: transparent;
+  background: #3456f3;
+  color: white;
   cursor: pointer;
   font-size: 13px;
   font-weight: 400;
   line-height: 16px;
+}
+
+.profile__form-button:disabled {
+  background: transparent;
+  color: black;
+  cursor: default;
 }
 
 .profile__form-button_type_active {
@@ -102,6 +116,15 @@
   font-weight: 500;
   line-height: 16px;
   text-decoration: none;
+}
+
+.profile__form-error {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  padding: 0;
+  margin: 6px 0 0 0;
+  color: #EE3465;
 }
 
 @media screen and (max-width: 769px) {
