@@ -26,7 +26,7 @@ export const Login = ({ onLogin }) => {
             });
     };
 
-    function handleSubmit(e) {
+    const handleSubmit = e => {
         e.preventDefault();
         onLogin(form);
     }

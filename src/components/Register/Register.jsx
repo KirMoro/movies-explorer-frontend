@@ -28,7 +28,7 @@ export const Register = ({ onRegister }) => {
             });
     };
 
-    function handleSubmit(e) {
+    const handleSubmit = e => {
         e.preventDefault();
         onRegister(form);
     }

@@ -2,7 +2,7 @@ import './App.css';
 import {Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
 import { AppContext } from '../../contexts/AppContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Header } from '../Header/Header';
 import { Navigation } from '../Navigation/Navigation';
 import { Main } from '../Main/Main';
@@ -16,13 +16,14 @@ import { Login } from '../Login/Login';
 import { Menu } from '../Menu/Menu';
 import {apiAuth} from "../../utils/apiAuth";
 import {apiMovies} from "../../utils/MoviesApi";
+import {apiMain} from "../../utils/MainApi";
 
 function App() {
   const [loggedIn, setLogin] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
-    const history = useHistory();
+  const history = useHistory();
 
   const closeAllPopups = () => {
     setMenuOpen(false);
@@ -39,8 +40,12 @@ function App() {
     '/signin',
   ];
 
+  const handleSearch = searchData => {
+      console.log(searchData)
+  }
+
   // Регистрация пользователя
-  function handleRegistration(registrationData) {
+  const handleRegistration = registrationData => {
     apiAuth.register(registrationData)
         .then(() => {
           history.push('/signin');
@@ -50,12 +55,12 @@ function App() {
   }
 
   // Авторизация пользователя
-  function handleLogin(loginData) {
+  const handleLogin = loginData => {
     apiAuth.login(loginData)
-        .then((token) => {
-          setLogin(!loggedIn);
-          localStorage.setItem('token', token);
-          // api.getToken(data.token);
+        .then((data) => {
+          // setLogin(!loggedIn);
+          localStorage.setItem('token', data.token);
+          apiMain.getToken(data.token);
           history.push('/');
         })
         .catch((err) => {
@@ -67,18 +72,38 @@ function App() {
   function tokenCheck() {
     const token = localStorage.getItem('token');
     if (token) {
-      api.getToken(token);
-      apiAuth.getTokenValid(token)
+        apiMain.getToken(token);
+        apiMain.getTokenValid(token)
           .then((data) => {
-            setLogin(!loggedIn);
-            setUserEmail(data.email);
-            history.push('/');
+            // setLogin(!loggedIn);
+            // history.push('/');
           })
           .catch((err) => {
             console.log(err);
           });
     }
   }
+
+    useEffect(() => {
+        tokenCheck();
+    }, []);
+
+    // Загрузка данных с сервера
+    useEffect(() => {
+        if (loggedIn) {
+            const initialPromises = Promise.all([
+                apiMain.getProfileInfo(),
+                apiMovies.getMovies(),
+            ]);
+            initialPromises
+                .then(([profile, movies]) => {
+                    setCurrentUser(profile);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }, [loggedIn]);
 
   return (
       <AppContext.Provider value={{ loggedIn, setLogin }}>
@@ -105,8 +130,22 @@ function App() {
                       <Route exact path="/">
                           <Main />
                       </Route>
+                      {/*<ProtectedRoute*/}
+                      {/*    path="/"*/}
+                      {/*    component={Main}*/}
+                      {/*    onEditProfile={handleEditProfileClick}*/}
+                      {/*    onAddPlace={handleAddPlaceClick}*/}
+                      {/*    onEditAvatar={handleEditAvatarClick}*/}
+                      {/*    onCardClick={handleCardClick}*/}
+                      {/*    cards={cards}*/}
+                      {/*    onCardLike={handleCardLike}*/}
+                      {/*    onCardDelete={handleDeleteCardId}*/}
+                      {/*    onTrashClick={handleConfirmClick}*/}
+                      {/*/>*/}
                       <Route path="/movies">
-                          <Movies />
+                          <Movies
+                          onSearch={handleSearch}
+                          />
                       </Route>
                       <Route path="/saved-movies">
                           <SavedMovies />

@@ -3,10 +3,12 @@ import {SearchForm} from "./SearchForm/SearchForm";
 import {MoviesCardList} from "./MoviesCardList/MoviesCardList";
 import {movies} from "../../__fixtures__/movies";
 
-export const Movies = () => {
+export const Movies = ({onSearch}) => {
     return (
         <section className="movies">
-            <SearchForm/>
+            <SearchForm
+            onSearch={onSearch}
+            />
             <MoviesCardList
                 movies={movies}
             />

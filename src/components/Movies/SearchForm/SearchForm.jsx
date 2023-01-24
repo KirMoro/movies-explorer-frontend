@@ -2,7 +2,7 @@ import './SearchForm.css';
 import {useState} from "react";
 import {useFormValidation} from "../../hooks/useFormValidation";
 
-export const SearchForm = ({children}) => {
+export const SearchForm = ({onSearch}) => {
     const [form, setForm] = useState({
         request: "",
     });
@@ -25,14 +25,16 @@ export const SearchForm = ({children}) => {
             });
     };
 
-    // function handleSubmit(e) {
-    //     e.preventDefault();
-    //     onLogin(form);
-    // }
+    const handleSubmit = e => {
+        e.preventDefault();
+        onSearch(form.request);
+    }
 
     return (
         <article className="search">
-            <form className="search__form">
+            <form
+                onSubmit={handleSubmit}
+                className="search__form">
                 <fieldset className="search__form-fieldset search__form-fieldset_type_input">
                     <label>
                         <input
