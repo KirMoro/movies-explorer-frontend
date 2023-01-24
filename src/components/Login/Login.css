@@ -98,6 +98,15 @@
   text-align: center;
 }
 
+.login__form-error {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  padding: 0;
+  margin: 6px 0 0 0;
+  color: #EE3465;
+}
+
 @media screen and (max-width: 769px) {
   .login {
     margin: 232px 0 0;

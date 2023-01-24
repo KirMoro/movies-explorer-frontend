@@ -1,22 +1,38 @@
 import './Register.css';
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {useLoginFormValidation} from "../hooks/useLoginFormValidation";
+import {useRegisterFormValidation} from "../hooks/useRegisterFormValidation";
 
 export const Register = ({ onRegister }) => {
-    const [values, setValues] = useState({});
+    // const [values, setValues] = useState({});
+    const [form, setForm] = useState({
+        name: "",
+        email: "",
+        password: "",
+    });
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setValues((prev) => ({
-            ...prev,
+    const { errors, validateForm, onBlurField } = useRegisterFormValidation(form);
+
+    const handleChange = e => {
+        const { name, value } = e.target;
+        const nextFormState = {
+            ...form,
             [name]: value,
-        }));
+        };
+
+        setForm(nextFormState);
+        if (errors[name].dirty)
+            validateForm({
+                form: nextFormState,
+                errors,
+                name,
+            });
     };
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(values)
-        onRegister(values);
+        onRegister(form);
     }
 
     return (
@@ -44,12 +60,14 @@ export const Register = ({ onRegister }) => {
                             type="name"
                             name="name"
                             placeholder="Имя"
-                            minLength="2"
-                            maxLength="30"
                             required
                             onChange={handleChange}
+                            onBlur={onBlurField}
                             className="register__form-input"
                         />
+                        {errors.name.dirty && errors.name.error ? (
+                            <p className="login__form-error">{errors.name.message}</p>
+                        ) : null}
                     </label>
                     <label className="register__form-label">
                         <span className="register__form-text">
@@ -62,8 +80,12 @@ export const Register = ({ onRegister }) => {
                             placeholder="Email"
                             required
                             onChange={handleChange}
+                            onBlur={onBlurField}
                             className="register__form-input"
                         />
+                        {errors.email.dirty && errors.email.error ? (
+                            <p className="login__form-error">{errors.email.message}</p>
+                        ) : null}
                     </label>
                     <label className="register__form-label">
                         <span className="register__form-text">
@@ -76,16 +98,19 @@ export const Register = ({ onRegister }) => {
                             placeholder="Пароль"
                             required
                             onChange={handleChange}
+                            onBlur={onBlurField}
                             className="register__form-input"
                         />
+                        {errors.password.dirty && errors.password.error ? (
+                            <p className="login__form-error">{errors.password.message}</p>
+                        ) : null}
                     </label>
 
                 </fieldset>
                 <button
                     type="submit"
-                    // onClick={onSubmit}
                     className="register__form-button"
-                    // aria-label={ariaLabel}
+                    aria-label="submit-button"
                 >
                     Редактировать
                 </button>

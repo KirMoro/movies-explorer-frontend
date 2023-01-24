@@ -1,23 +1,37 @@
 import './Login.css';
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {useLoginFormValidation} from "../hooks/useLoginFormValidation";
 
 export const Login = ({ onLogin }) => {
-    const [values, setValues] = useState({});
+    const [form, setForm] = useState({
+        email: "",
+        password: "",
+    });
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setValues((prev) => ({
-            ...prev,
+    const { errors, validateForm, onBlurField } = useLoginFormValidation(form);
+
+    const handleChange = e => {
+        const { name, value } = e.target;
+        const nextFormState = {
+            ...form,
             [name]: value,
-        }));
+        };
+
+        setForm(nextFormState);
+        if (errors[name].dirty)
+            validateForm({
+                form: nextFormState,
+                errors,
+                name,
+            });
     };
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(values)
-        onLogin(values);
+        onLogin(form);
     }
+
     return (
         <section className="login">
             <Link
@@ -46,7 +60,11 @@ export const Login = ({ onLogin }) => {
                                placeholder="Email"
                                required
                                onChange={handleChange}
+                               onBlur={onBlurField}
                         />
+                        {errors.email.dirty && errors.email.error ? (
+                            <p className="login__form-error">{errors.email.message}</p>
+                        ) : null}
                     </label>
                     <label className="login__form-label">
                         <span className="login__form-text">
@@ -59,8 +77,12 @@ export const Login = ({ onLogin }) => {
                             placeholder="Пароль"
                             required
                             onChange={handleChange}
+                            onBlur={onBlurField}
                             className="login__form-input"
                         />
+                        {errors.password.dirty && errors.password.error ? (
+                            <p className="login__form-error">{errors.password.message}</p>
+                        ) : null}
                     </label>
                 </fieldset>
                 <button
