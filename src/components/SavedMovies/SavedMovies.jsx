@@ -1,14 +1,19 @@
 import './SavedMovies.css';
-import {movies} from "../../__fixtures__/movies";
 import {SearchForm} from "../Movies/SearchForm/SearchForm";
 import {MoviesCardList} from "../Movies/MoviesCardList/MoviesCardList";
 
-export const SavedMovies = () => {
+export const SavedMovies = ({ movies, onSearch, setSearchRequest, handleSaveMovies }) => {
+    const filterMovies = movies.filter((movie) => movie.isSaved)
+
     return (
         <section className="savedmovies">
-            <SearchForm/>
+            <SearchForm
+                onSearch={onSearch}
+                setSearchRequest={setSearchRequest}
+            />
             <MoviesCardList
-                movies={movies}
+                onSave={handleSaveMovies}
+                movies={filterMovies}
             />
         </section>
     );

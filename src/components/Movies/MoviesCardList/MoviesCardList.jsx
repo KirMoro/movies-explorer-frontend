@@ -2,7 +2,7 @@ import './MoviesCardList.css';
 import {MoviesCard} from "../MoviesCard/MoviesCard";
 import {useLocation} from "react-router-dom";
 
-export const MoviesCardList = ({movies, onSave}) => {
+export const MoviesCardList = ({movies, onSave, onAddMore}) => {
     const location = useLocation();
 
     return (
@@ -18,7 +18,9 @@ export const MoviesCardList = ({movies, onSave}) => {
                             />
                         ))}
                     </ul>
-                    <button className="movieslist__more-button">
+                    <button
+                        onClick={onAddMore}
+                        className="movieslist__more-button">
                         Ещё
                     </button>
                 </>
@@ -27,7 +29,8 @@ export const MoviesCardList = ({movies, onSave}) => {
                     <ul className="moviescardlist">
                         {movies.map((movie) => (
                             <MoviesCard
-                                key={(movie.movieId)}
+                                onSave={onSave}
+                                key={(movie.id)}
                                 movie={movie}
                             />
                         ))}

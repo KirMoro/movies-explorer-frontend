@@ -1,5 +1,4 @@
 import './MoviesCard.css';
-import { useContext } from 'react';
 import classNames from "classnames";
 
 export const MoviesCard = ({movie, onSave
@@ -7,7 +6,12 @@ export const MoviesCard = ({movie, onSave
 
     const baseURL = 'https://api.nomoreparties.co/';
     let imageURL = '';
-    movie.image.url ? imageURL = `${baseURL}${movie.image.url}`: imageURL = movie.image;
+    if (movie.image.url) {
+        imageURL = `${baseURL}${movie.image.url}`
+    } else {
+       imageURL = movie.image;
+    }
+    // movie.image.url ? imageURL = `${baseURL}${movie.image.url}`: imageURL = movie.image;
 
     const handleClick = () => {
         onSave(movie);

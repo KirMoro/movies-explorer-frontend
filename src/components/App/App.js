@@ -169,9 +169,9 @@ function App() {
     }, []);
 
     // Загрузка данных с сервера
-    useEffect(() => {
+    useEffect( () => {
         if (loggedIn) {
-            const initialPromises = Promise.all([
+             const initialPromises = Promise.all([
                 apiMain.getProfileInfo(),
                 apiMovies.getMovies(),
                 apiMain.getSavedMovies(),
@@ -197,7 +197,8 @@ function App() {
 
                     localStorage.setItem('movies', JSON.stringify(movies));
 
-                    setMovies(movies)
+                    setMovies(movies);
+
                 })
                 .catch((err) => {
                     console.log(err);
@@ -205,7 +206,7 @@ function App() {
         }
     }, [loggedIn]);
 
-  return (
+    return (
       <AppContext.Provider value={{ loggedIn, setLogin }}>
           <CurrentUserContext.Provider value={currentUser}>
               <>
@@ -252,7 +253,12 @@ function App() {
                           />
                       </Route>
                       <Route path="/saved-movies">
-                          <SavedMovies />
+                          <SavedMovies
+                              onSearch={handleSearch}
+                              movies={movies}
+                              setSearchRequest={setSearchRequest}
+                              handleSaveMovies={handleSaveMovie}
+                          />
                       </Route>
                       <Route path="/profile">
                           <Profile
