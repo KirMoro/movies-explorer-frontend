@@ -27,7 +27,6 @@ class MainApi {
         this._token = token;
     }
 
-
     getTokenValid(token) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
@@ -50,6 +49,22 @@ class MainApi {
 
     getProfileInfo() {
         return this._fetch('users/me');
+    }
+
+    setProfile(body) {
+        return this._fetch('users/me', 'POST', body);
+    }
+
+    saveMovie(body) {
+        return this._fetch('movies/', 'POST', body);
+    }
+
+    deleteMovie(id) {
+        return this._fetch(`movies/${id}`, 'DELETE');
+    }
+
+    getSavedMovies() {
+        return this._fetch('movies');
     }
 }
 

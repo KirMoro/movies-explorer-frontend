@@ -22,6 +22,9 @@ function App() {
   const [loggedIn, setLogin] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [movies, setMovies] = useState([]);
+  const [isLoaded, setLoaded] = useState(false);
+  const [searchRequest, setSearchRequest] = useState({});
 
   const history = useHistory();
 
@@ -40,9 +43,70 @@ function App() {
     '/signin',
   ];
 
+  // Обработка поискового запроса
   const handleSearch = searchData => {
-      console.log(searchData)
+      if (!isLoaded) {
+          setLoaded(!isLoaded);
+      }
+
+      const request = {
+          request: searchData.request,
+          movies: searchData.movies,
+          switchState: searchData.switchState,
+      };
+
+      localStorage.setItem('searchRequest', JSON.stringify(request));
+      const localMovies = JSON.parse(localStorage.getItem('movies'));
+
+      if (localMovies) {
+          const filteredMovies = localMovies.filter((movie) => {
+              return movie.nameRU.toLowerCase().trim().includes(searchData.request.toLowerCase().trim())
+          })
+
+          localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
+
+          setMovies(filteredMovies)
+      }
   }
+
+  // Сохранение фильма
+    const handleSaveMovie = movie => {
+      if (!movie.isSaved) {
+          const saveMovie = {
+              "country": movie.country,
+              "director": movie.director,
+              "duration": movie.duration,
+              "year": movie.year,
+              "description": movie.description,
+              "image": `https://api.nomoreparties.co${movie.image.url}`,
+              "trailerLink": movie.trailerLink,
+              "thumbnail": `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
+              "movieId": movie.id,
+              "nameRU": movie.nameRU,
+              "nameEN": movie.nameEN,
+          }
+
+          apiMain.saveMovie(saveMovie)
+              .then((saveMovie) => {
+                  saveMovie.id = movie.id;
+                  saveMovie.isSaved = true;
+                  setMovies((state) => state.map((m) => (m.id === movie.id ? saveMovie : m)));
+              })
+              .catch((err) => {
+                  console.log(err);
+              });
+      } else {
+          apiMain.deleteMovie(movie._id)
+              .then((deleteMovie) => {
+                  deleteMovie.id = movie.id;
+                  deleteMovie.isSaved = false;
+                  setMovies((state) => state.map((m) => (m.id === movie.id ? deleteMovie : m)));
+              })
+              .catch((err) => {
+                  console.log(err);
+              });
+      }
+    }
 
   // Регистрация пользователя
   const handleRegistration = registrationData => {
@@ -68,6 +132,18 @@ function App() {
         });
   }
 
+    // Авторизация пользователя
+    const handleChangeProfile = profileData => {
+        apiMain.setProfile(profileData)
+            .then((data) => {
+                setCurrentUser(profile);
+                history.push('/movies');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
   // Проверка токена авторизации
   function tokenCheck() {
     const token = localStorage.getItem('token');
@@ -76,7 +152,7 @@ function App() {
         apiMain.getTokenValid(token)
           .then((data) => {
             setLogin(!loggedIn);
-            // history.push('/movies');
+            history.push('/movies');
           })
           .catch((err) => {
             console.log(err);
@@ -86,6 +162,10 @@ function App() {
 
     useEffect(() => {
         tokenCheck();
+
+        if (localStorage.getItem("searchRequest")) {
+            setLoaded(!isLoaded)
+        }
     }, []);
 
     // Загрузка данных с сервера
@@ -94,10 +174,30 @@ function App() {
             const initialPromises = Promise.all([
                 apiMain.getProfileInfo(),
                 apiMovies.getMovies(),
+                apiMain.getSavedMovies(),
             ]);
             initialPromises
-                .then(([profile, movies]) => {
+                .then(([profile, movies, savedMovies]) => {
                     setCurrentUser(profile);
+
+                    if (savedMovies) {
+                        savedMovies.forEach((movie) => {
+                            movie.isSaved = true;
+                        });
+                    }
+
+                    movies.forEach((movie) => {
+                        savedMovies.forEach((savedMovie) => {
+                            if (movie.nameRU === savedMovie.nameRU) {
+                                movie._id = savedMovie._id;
+                                movie.isSaved = true;
+                            }
+                        });
+                    })
+
+                    localStorage.setItem('movies', JSON.stringify(movies));
+
+                    setMovies(movies)
                 })
                 .catch((err) => {
                     console.log(err);
@@ -144,14 +244,20 @@ function App() {
                       {/*/>*/}
                       <Route path="/movies">
                           <Movies
+                          isLoaded={isLoaded}
                           onSearch={handleSearch}
+                          movies={movies}
+                          setSearchRequest={setSearchRequest}
+                          handleSaveMovies={handleSaveMovie}
                           />
                       </Route>
                       <Route path="/saved-movies">
                           <SavedMovies />
                       </Route>
                       <Route path="/profile">
-                          <Profile />
+                          <Profile
+                          onSave={handleChangeProfile}
+                          />
                       </Route>
                       <Route path="/*">
                           <NotFound />

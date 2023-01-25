@@ -47,7 +47,7 @@ export const Profile = ({onSave}) => {
                             Имя
                         </span>
                         <input
-                            id="email-input"
+                            id="name-input"
                             type="name"
                             name="name"
                             required
@@ -79,7 +79,7 @@ export const Profile = ({onSave}) => {
                         ) : null}
                     </label>
                 </fieldset>
-                {(!form.email || !form.name || errors.name.dirty && errors.name.error || errors.email.dirty && errors.email.error) ? (
+                {(!form.email || form.email === currentUserContext.email|| !form.name || form.name === currentUserContext.name || errors.name.dirty && errors.name.error || errors.email.dirty && errors.email.error) ? (
                     <button
                         type="submit"
                         className="login__form-button"

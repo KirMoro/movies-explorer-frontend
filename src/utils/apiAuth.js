@@ -29,26 +29,6 @@ class ApiAuth {
     login(body) {
         return this._fetch('signin', 'POST', body)
     }
-
-    getTokenValid(token) {
-        return fetch(`${this._baseUrl}/users/me`, {
-            method: 'GET',
-            headers: {
-                'content-type': this._content_type,
-                'Authorization': `Bearer ${token}`
-            },
-            body: undefined
-        }).then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-        )
-            .then((result) => {
-                return result;
-            });
-    }
 }
 
 export const apiAuth = new ApiAuth({

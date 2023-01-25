@@ -2,7 +2,7 @@ import './SearchForm.css';
 import {useState} from "react";
 import {useFormValidation} from "../../hooks/useFormValidation";
 
-export const SearchForm = ({onSearch}) => {
+export const SearchForm = ({onSearch, searchRequest}) => {
     const [form, setForm] = useState({
         request: "",
     });
@@ -27,7 +27,11 @@ export const SearchForm = ({onSearch}) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        onSearch(form.request);
+        const searchData = {
+            request: form.request,
+            switchState: '',
+        }
+        onSearch(searchData);
     }
 
     return (
