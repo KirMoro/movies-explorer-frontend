@@ -73,7 +73,6 @@
 
 .moviescard__likebutton_type_trash {
   background-image: url('../../../images/moviesCard__delete_icon.svg');
-
 }
 
 .moviescard__like-button:hover {

@@ -1,5 +1,5 @@
 .emptystate {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
+  display: flex;
+  width: 90%;
+  flex-direction: column;
 }
