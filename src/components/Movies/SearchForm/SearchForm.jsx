@@ -1,11 +1,12 @@
 import './SearchForm.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useFormValidation} from "../../hooks/useFormValidation";
 
 export const SearchForm = ({onSearch, searchRequest}) => {
     const [form, setForm] = useState({
         request: "",
     });
+    const [switchState, setSwitchState] = useState(false);
 
     const { errors, validateForm, onBlurField } = useFormValidation(form);
 
@@ -29,10 +30,19 @@ export const SearchForm = ({onSearch, searchRequest}) => {
         e.preventDefault();
         const searchData = {
             request: form.request,
-            switchState: '',
+            switch: switchState,
         }
         onSearch(searchData);
     }
+
+    useEffect(() => {
+        if (searchRequest) {
+            setForm({
+                request: searchRequest.request,
+            });
+            setSwitchState(searchRequest.switch)
+        }
+    }, [searchRequest]);
 
     return (
         <article className="search">
@@ -45,6 +55,7 @@ export const SearchForm = ({onSearch, searchRequest}) => {
                             required
                             name="request"
                             placeholder="Фильм"
+                            value={form.request || ''}
                             onChange={handleChange}
                             onBlur={onBlurField}
                             className="search__form-input"/>
@@ -63,6 +74,8 @@ export const SearchForm = ({onSearch, searchRequest}) => {
                         Короткометражки
                     </label>
                     <input
+                        checked={switchState}
+                        onChange={() => setSwitchState(!switchState)}
                         className="search__form-switch"
                         type="checkbox"
                     />

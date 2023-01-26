@@ -1,8 +1,10 @@
 import './MoviesCard.css';
 import classNames from "classnames";
+import {useLocation} from "react-router-dom";
 
 export const MoviesCard = ({movie, onSave
                      }) => {
+    const location = useLocation();
 
     const baseURL = 'https://api.nomoreparties.co/';
     let imageURL = '';
@@ -29,12 +31,24 @@ export const MoviesCard = ({movie, onSave
             <div className="moviescard__text">
                 <h2 className="moviescard__title">{movie.nameRU}</h2>
                 <p className="moviescard__duration">{convertMinutesToHours(movie.duration)}</p>
-                <button
+                {location.pathname === '/movies' && (<button
                     onClick={() => handleClick()}
                     type="button"
                     className={classNames("moviescard__like-button", { moviescard__likebutton_active: movie.isSaved })}
                     aria-label="Понравилось"
-                />
+                />)}
+                {location.pathname === '/saved-movies' && (<button
+                    onClick={() => handleClick()}
+                    type="button"
+                    className={classNames("moviescard__like-button", { moviescard__likebutton_type_trash: movie.isSaved })}
+                    aria-label="Понравилось"
+                />)}
+                {/*<button*/}
+                {/*    onClick={() => handleClick()}*/}
+                {/*    type="button"*/}
+                {/*    className={classNames("moviescard__like-button", "", { moviescard__likebutton_active: movie.isSaved })}*/}
+                {/*    aria-label="Понравилось"*/}
+                {/*/>*/}
             </div>
         </li>
     );

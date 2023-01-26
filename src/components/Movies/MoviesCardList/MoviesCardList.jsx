@@ -2,7 +2,7 @@ import './MoviesCardList.css';
 import {MoviesCard} from "../MoviesCard/MoviesCard";
 import {useLocation} from "react-router-dom";
 
-export const MoviesCardList = ({movies, onSave, onAddMore}) => {
+export const MoviesCardList = ({movies, onSave, onAddMore, loadMore }) => {
     const location = useLocation();
 
     return (
@@ -18,11 +18,11 @@ export const MoviesCardList = ({movies, onSave, onAddMore}) => {
                             />
                         ))}
                     </ul>
-                    <button
+                    {loadMore && <button
                         onClick={onAddMore}
                         className="movieslist__more-button">
                         Ещё
-                    </button>
+                    </button>}
                 </>
             )}
             {location.pathname === '/saved-movies' && (

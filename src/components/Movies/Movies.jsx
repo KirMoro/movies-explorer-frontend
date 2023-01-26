@@ -4,35 +4,40 @@ import {MoviesCardList} from "./MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import {useEffect, useState} from "react";
 
-export const Movies = ({isLoaded, onSearch, movies, setSearchRequest, handleSaveMovies }) => {
+export const Movies = ({isLoaded, onSearch, movies, searchRequest, handleSaveMovies }) => {
     const [index, setIndex] = useState({
         start: 12,
         load: 3,
     });
-    const [renderItems, setRenderItems] = useState([]);
+    const [loadMore, setLoadMore] = useState(true);
 
-    const handleRenderItems = () => {
-        setRenderItems(movies.slice(0, index.start))
+    const handleLoadMore = () => {
+        if (movies.length <= index.start) {
+            setLoadMore(!loadMore)
+        }
     }
 
-    const handleRenderCounter = () => {
-        if (window.innerWidth > 1196)
+    const handleRenderCounter = (movies) => {
+        if (window.innerWidth > 1196) {
             setIndex({
                 start: 12,
                 load: 3,
             })
+        }
 
-        if (window.innerWidth < 1200)
+        if (window.innerWidth < 1200) {
             setIndex({
                 start: 8,
                 load: 2,
             })
+        }
 
-        if (window.innerWidth < 767)
+        if (window.innerWidth < 767) {
             setIndex({
                 start: 5,
                 load: 1,
             })
+        }
     };
 
     const itemsToRender = movies.slice(0, index.start);
@@ -44,6 +49,18 @@ export const Movies = ({isLoaded, onSearch, movies, setSearchRequest, handleSave
         })
     }
 
+    // useEffect(() => {
+    //     const handleWindowLoad = () => {
+    //             if (movies.length <= index.start) {
+    //                 setLoadMore(!loadMore)
+    //             }
+    //     };
+    //
+    //     window.addEventListener('load', handleWindowLoad);
+    //
+    //     return () => window.removeEventListener('load', handleWindowLoad);
+    // }, [movies.length])
+
     useEffect(() => {
         window.addEventListener("resize", handleRenderCounter);
 
@@ -51,17 +68,20 @@ export const Movies = ({isLoaded, onSearch, movies, setSearchRequest, handleSave
     }, []);
 
     // console.log(movies.length)
+    // console.log(loadMore)
+
 
     return (
         <section className="movies">
             <SearchForm
+                searchRequest={searchRequest}
                 onSearch={onSearch}
-                setSearchRequest={setSearchRequest}
             />
             {isLoaded ? <MoviesCardList
                         onAddMore={handleHasMore}
                         onSave={handleSaveMovies}
                         movies={itemsToRender}
+                        loadMore={loadMore}
                     /> : <Preloader /> }
         </section>
     );

@@ -23,6 +23,8 @@ function App() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
+
   const [isLoaded, setLoaded] = useState(false);
   const [searchRequest, setSearchRequest] = useState({});
 
@@ -48,14 +50,10 @@ function App() {
       if (!isLoaded) {
           setLoaded(!isLoaded);
       }
+      const shortDuration = 40;
 
-      const request = {
-          request: searchData.request,
-          movies: searchData.movies,
-          switchState: searchData.switchState,
-      };
+      localStorage.setItem('searchRequest', JSON.stringify(searchData));
 
-      localStorage.setItem('searchRequest', JSON.stringify(request));
       const localMovies = JSON.parse(localStorage.getItem('movies'));
 
       if (localMovies) {
@@ -63,10 +61,32 @@ function App() {
               return movie.nameRU.toLowerCase().trim().includes(searchData.request.toLowerCase().trim())
           })
 
-          localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
-
-          setMovies(filteredMovies)
+          localStorage.setItem('searchMovies', JSON.stringify(filteredMovies));
+          setMovies(filteredMovies);
       }
+
+      if (searchData.switch) {
+          const shortMovies = localMovies.filter((movie) => movie.duration <= shortDuration);
+
+          localStorage.setItem('searchMovies', JSON.stringify(shortMovies));
+          setMovies(shortMovies);
+      }
+
+      // if (localMovies) {
+      //     const filteredMovies = localMovies.filter((movie) => {
+      //         return movie.nameRU.toLowerCase().trim().includes(searchData.request.toLowerCase().trim())
+      //     })
+      //
+      //     if (searchData.switch) {
+      //         const shortMovies = localMovies.filter((movie) => movie.duration <= shortDuration);
+      //
+      //         localStorage.setItem('searchMovies', JSON.stringify(shortMovies));
+      //         setMovies(shortMovies);
+      //     }
+      //
+      //     localStorage.setItem('searchMovies', JSON.stringify(filteredMovies));
+      //     setMovies(filteredMovies);
+      // }
   }
 
   // Сохранение фильма
@@ -88,6 +108,8 @@ function App() {
 
           apiMain.saveMovie(saveMovie)
               .then((saveMovie) => {
+                  console.log(saveMovie)
+
                   saveMovie.id = movie.id;
                   saveMovie.isSaved = true;
                   setMovies((state) => state.map((m) => (m.id === movie.id ? saveMovie : m)));
@@ -163,9 +185,9 @@ function App() {
     useEffect(() => {
         tokenCheck();
 
-        if (localStorage.getItem("searchRequest")) {
-            setLoaded(!isLoaded)
-        }
+        // if (localStorage.getItem("searchRequest")) {
+        //     setLoaded(!isLoaded)
+        // }
     }, []);
 
     // Загрузка данных с сервера
@@ -186,6 +208,18 @@ function App() {
                         });
                     }
 
+                    const markIdAndIsSaved = (prevReqMovies) => {
+                        prevReqMovies.forEach((movie) => {
+                            savedMovies.forEach((savedMovie) => {
+                                if (movie.nameRU === savedMovie.nameRU) {
+                                    movie._id = savedMovie._id;
+                                    movie.isSaved = true;
+                                }
+                            });
+                        });
+                        return prevReqMovies;
+                    }
+
                     movies.forEach((movie) => {
                         savedMovies.forEach((savedMovie) => {
                             if (movie.nameRU === savedMovie.nameRU) {
@@ -195,10 +229,16 @@ function App() {
                         });
                     })
 
-                    localStorage.setItem('movies', JSON.stringify(movies));
+                    localStorage.setItem('movies', JSON.stringify(markIdAndIsSaved(movies)));
 
-                    setMovies(movies);
+                    const savedPrevMovies = JSON.parse(localStorage.getItem('searchMovies'));
+                    const savedPrevRequest = JSON.parse(localStorage.getItem('searchRequest'));
 
+                    if (savedPrevMovies) {
+                        setLoaded(!isLoaded);
+                        setMovies(markIdAndIsSaved(savedPrevMovies));
+                        setSearchRequest(savedPrevRequest);
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
@@ -248,7 +288,7 @@ function App() {
                           isLoaded={isLoaded}
                           onSearch={handleSearch}
                           movies={movies}
-                          setSearchRequest={setSearchRequest}
+                          searchRequest={searchRequest}
                           handleSaveMovies={handleSaveMovie}
                           />
                       </Route>
