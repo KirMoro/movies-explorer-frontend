@@ -1,9 +1,11 @@
 import './Navigation.css';
 import {Link, useLocation} from "react-router-dom";
-import {useState} from "react";
+import {useContext} from "react";
+import {AppContext} from "../../contexts/AppContext";
 
 export const Navigation = ({onOpenMenu}) => {
     const location = useLocation();
+    const appContext = useContext(AppContext);
 
     return (
         <nav className="navigation">
@@ -25,7 +27,7 @@ export const Navigation = ({onOpenMenu}) => {
                     </Link>
                 </>
             )}
-            {(location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile') && (
+            {(appContext.loggedIn && location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile') && (
                 <>
                     <ul className="navigation__list navigation__list_type_movies">
                         <li>

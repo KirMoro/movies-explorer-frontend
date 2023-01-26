@@ -1,10 +1,9 @@
 import './Profile.css';
-import {Link} from "react-router-dom";
 import {useContext, useState} from "react";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import {useFormValidation} from "../hooks/useFormValidation";
 
-export const Profile = ({onSave}) => {
+export const Profile = ({onSave, onSignOut}) => {
     const currentUserContext = useContext(CurrentUserContext);
 
     const [form, setForm] = useState({
@@ -95,12 +94,12 @@ export const Profile = ({onSave}) => {
                 >
                     Сохранить
                 </button>}
-                <Link
-                    to="/"
+                <button
+                    onClick={onSignOut}
                     className="profile__form-link"
                 >
                     Выйти из аккаунта
-                </Link>
+                </button>
             </form>
         </section>
     );

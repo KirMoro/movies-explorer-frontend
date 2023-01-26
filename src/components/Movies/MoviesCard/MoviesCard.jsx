@@ -13,7 +13,6 @@ export const MoviesCard = ({movie, onSave
     } else {
        imageURL = movie.image;
     }
-    // movie.image.url ? imageURL = `${baseURL}${movie.image.url}`: imageURL = movie.image;
 
     const handleClick = () => {
         onSave(movie);

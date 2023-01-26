@@ -4,13 +4,13 @@ import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 export const MoviesCardList = ({movies, onSave, searchError }) => {
-    const location = useLocation();
-
     const [index, setIndex] = useState({
         start: 12,
         load: 3,
     });
     const [loadMore, setLoadMore] = useState(true);
+
+    const location = useLocation();
 
     const handleRenderCounter = (movies) => {
         if (window.innerWidth > 1196) {

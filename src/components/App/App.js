@@ -17,17 +17,15 @@ import { Menu } from '../Menu/Menu';
 import {apiAuth} from "../../utils/apiAuth";
 import {apiMovies} from "../../utils/MoviesApi";
 import {apiMain} from "../../utils/MainApi";
+import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [loggedIn, setLogin] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
-  const [savedMovies, setSavedMovies] = useState([]);
   const [searchError, setSearchError] = useState(false);
-
-
-    const [isLoaded, setLoaded] = useState(false);
+  const [isLoaded, setLoaded] = useState(false);
   const [searchRequest, setSearchRequest] = useState({});
 
   const history = useHistory();
@@ -180,12 +178,15 @@ function App() {
     }
   }
 
+  // Выход из программы
+    const signOut = () => {
+        setLogin(!loggedIn);
+        localStorage.removeItem('token');
+        history.push('/signin');
+    }
+
     useEffect(() => {
         tokenCheck();
-
-        // if (localStorage.getItem("searchRequest")) {
-        //     setLoaded(!isLoaded)
-        // }
     }, []);
 
     // Загрузка данных с сервера
@@ -269,41 +270,30 @@ function App() {
                       <Route exact path="/">
                           <Main />
                       </Route>
-                      {/*<ProtectedRoute*/}
-                      {/*    path="/"*/}
-                      {/*    component={Main}*/}
-                      {/*    onEditProfile={handleEditProfileClick}*/}
-                      {/*    onAddPlace={handleAddPlaceClick}*/}
-                      {/*    onEditAvatar={handleEditAvatarClick}*/}
-                      {/*    onCardClick={handleCardClick}*/}
-                      {/*    cards={cards}*/}
-                      {/*    onCardLike={handleCardLike}*/}
-                      {/*    onCardDelete={handleDeleteCardId}*/}
-                      {/*    onTrashClick={handleConfirmClick}*/}
-                      {/*/>*/}
-                      <Route path="/movies">
-                          <Movies
+                      <ProtectedRoute
+                          path="/movies"
+                          component={Movies}
                           isLoaded={isLoaded}
                           onSearch={handleSearch}
                           movies={movies}
                           searchRequest={searchRequest}
                           handleSaveMovies={handleSaveMovie}
                           searchError={searchError}
-                          />
-                      </Route>
-                      <Route path="/saved-movies">
-                          <SavedMovies
-                              onSearch={handleSearch}
-                              movies={movies}
-                              setSearchRequest={setSearchRequest}
-                              handleSaveMovies={handleSaveMovie}
-                          />
-                      </Route>
-                      <Route path="/profile">
-                          <Profile
+                      />
+                      <ProtectedRoute
+                          path="/movies"
+                          component={SavedMovies}
+                          onSearch={handleSearch}
+                          movies={movies}
+                          setSearchRequest={setSearchRequest}
+                          handleSaveMovies={handleSaveMovie}
+                      />
+                      <ProtectedRoute
+                          path="/profile"
+                          component={Profile}
                           onSave={handleChangeProfile}
-                          />
-                      </Route>
+                          onSignOut={signOut}
+                      />
                       <Route path="/*">
                           <NotFound />
                       </Route>

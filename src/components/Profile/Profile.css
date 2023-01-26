@@ -116,6 +116,8 @@
   font-weight: 500;
   line-height: 16px;
   text-decoration: none;
+  background: transparent;
+  border: none;
 }
 
 .profile__form-error {

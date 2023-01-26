@@ -12,10 +12,8 @@ export const Movies = ({isLoaded, onSearch, movies, searchRequest, handleSaveMov
                 onSearch={onSearch}
             />
             {isLoaded ? <MoviesCardList
-                        // onAddMore={handleHasMore}
                         onSave={handleSaveMovies}
                         movies={movies}
-                        // loadMore={loadMore}
                         searchError={searchError}
                     /> : <Preloader />}
         </section>
