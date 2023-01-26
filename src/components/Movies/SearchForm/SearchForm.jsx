@@ -37,12 +37,12 @@ export const SearchForm = ({onSearch, searchRequest}) => {
 
     useEffect(() => {
         if (searchRequest) {
+            setSwitchState(searchRequest.switch);
             setForm({
                 request: searchRequest.request,
             });
-            setSwitchState(searchRequest.switch)
         }
-    }, [searchRequest]);
+    }, []);
 
     return (
         <article className="search">

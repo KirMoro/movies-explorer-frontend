@@ -4,7 +4,7 @@ import {MoviesCardList} from "./MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import {useEffect, useState} from "react";
 
-export const Movies = ({isLoaded, onSearch, movies, searchRequest, handleSaveMovies }) => {
+export const Movies = ({isLoaded, onSearch, movies, searchRequest, handleSaveMovies, searchError }) => {
     const [index, setIndex] = useState({
         start: 12,
         load: 3,
@@ -82,7 +82,8 @@ export const Movies = ({isLoaded, onSearch, movies, searchRequest, handleSaveMov
                         onSave={handleSaveMovies}
                         movies={itemsToRender}
                         loadMore={loadMore}
-                    /> : <Preloader /> }
+                        searchError={searchError}
+                    /> : <Preloader />}
         </section>
     );
 };

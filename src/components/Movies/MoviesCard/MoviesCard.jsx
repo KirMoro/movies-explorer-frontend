@@ -27,7 +27,13 @@ export const MoviesCard = ({movie, onSave
 
     return (
         <li className="moviescard">
-            <img className="moviescard__image" src={imageURL} alt={movie.nameRU} />
+            <a
+            href={movie.trailerLink}
+            target="_blank"
+            aria-label="Trailer"
+            >
+                <img className="moviescard__image" src={imageURL} alt={movie.nameRU} />
+            </a>
             <div className="moviescard__text">
                 <h2 className="moviescard__title">{movie.nameRU}</h2>
                 <p className="moviescard__duration">{convertMinutesToHours(movie.duration)}</p>
@@ -43,12 +49,6 @@ export const MoviesCard = ({movie, onSave
                     className={classNames("moviescard__like-button", { moviescard__likebutton_type_trash: movie.isSaved })}
                     aria-label="Понравилось"
                 />)}
-                {/*<button*/}
-                {/*    onClick={() => handleClick()}*/}
-                {/*    type="button"*/}
-                {/*    className={classNames("moviescard__like-button", "", { moviescard__likebutton_active: movie.isSaved })}*/}
-                {/*    aria-label="Понравилось"*/}
-                {/*/>*/}
             </div>
         </li>
     );
