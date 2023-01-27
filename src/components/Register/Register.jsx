@@ -111,7 +111,7 @@ export const Register = ({onRegister}) => {
                         aria-label="submit-button"
                         disabled={true}
                     >
-                        Редактировать
+                        Зарегистрироваться
                     </button>
                 ) : <button
                     type="submit"

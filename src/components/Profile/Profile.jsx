@@ -7,8 +7,8 @@ export const Profile = ({onSave, onSignOut}) => {
     const currentUserContext = useContext(CurrentUserContext);
 
     const [form, setForm] = useState({
-        name: "",
-        email: "",
+        name: currentUserContext.name,
+        email: currentUserContext.email,
     });
     const { errors, validateForm, onBlurField } = useFormValidation(form);
 
@@ -53,7 +53,7 @@ export const Profile = ({onSave, onSignOut}) => {
                             onChange={handleChange}
                             onBlur={onBlurField}
                             className="profile__form-input"
-                            placeholder={currentUserContext.name}
+                            value={form.name || ''}
                         />
                         {errors.name.dirty && errors.name.error ? (
                             <p className="profile__form-error">{errors.name.message}</p>
@@ -71,14 +71,14 @@ export const Profile = ({onSave, onSignOut}) => {
                             onChange={handleChange}
                             onBlur={onBlurField}
                             className="profile__form-input"
-                            placeholder={currentUserContext.email}
+                            value={form.email || ''}
                         />
                         {errors.email.dirty && errors.email.error ? (
                             <p className="profile__form-error">{errors.email.message}</p>
                         ) : null}
                     </label>
                 </fieldset>
-                {(!form.email || form.email === currentUserContext.email|| !form.name || form.name === currentUserContext.name || errors.name.dirty && errors.name.error || errors.email.dirty && errors.email.error) ? (
+                {(form.email === currentUserContext.email && form.name === currentUserContext.name || errors.name.dirty && errors.name.error || errors.email.dirty && errors.email.error) ? (
                     <button
                         type="submit"
                         className="login__form-button"

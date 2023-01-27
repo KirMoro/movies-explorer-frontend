@@ -1,8 +1,11 @@
 import './SearchForm.css';
 import {useEffect, useState} from "react";
 import {useFormValidation} from "../../hooks/useFormValidation";
+import {useLocation} from "react-router-dom";
 
-export const SearchForm = ({onSearch, searchRequest}) => {
+export const SearchForm = ({onSearch}) => {
+    const location = useLocation();
+
     const [form, setForm] = useState({
         request: "",
     });
@@ -36,11 +39,15 @@ export const SearchForm = ({onSearch, searchRequest}) => {
     }
 
     useEffect(() => {
-        if (searchRequest) {
-            setSwitchState(searchRequest.switch);
-            setForm({
-                request: searchRequest.request,
-            });
+        if (location.pathname === '/movies') {
+            const searchRequest = JSON.parse(localStorage.getItem('searchRequest'));
+
+            if (searchRequest) {
+                setSwitchState(searchRequest.switch);
+                setForm({
+                    request: searchRequest.request,
+                });
+            }
         }
     }, []);
 

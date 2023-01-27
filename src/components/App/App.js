@@ -20,15 +20,16 @@ import { apiAuth } from '../../utils/apiAuth';
 import { apiMovies } from '../../utils/MoviesApi';
 import { apiMain } from '../../utils/MainApi';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
+import {constants} from "../../utils/constants";
 
 function App() {
   const [loggedIn, setLogin] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
   const [searchError, setSearchError] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
-  const [searchRequest, setSearchRequest] = useState({});
 
   const history = useHistory();
 
@@ -49,14 +50,12 @@ function App() {
 
   // Обработка поискового запроса
   const handleSearch = (searchData) => {
+    // setLoaded(!isLoaded);
+    // setTimeout(setLoaded(!isLoaded), 1000);
+
     if (searchError) {
       setSearchError(!searchError);
     }
-
-    if (!isLoaded) {
-      setLoaded(!isLoaded);
-    }
-    const shortDuration = 40;
 
     localStorage.setItem('searchRequest', JSON.stringify(searchData));
 
@@ -77,7 +76,7 @@ function App() {
       }
 
       if (searchData.switch) {
-        const shortMovies = filteredMovies.filter((movie) => movie.duration <= shortDuration);
+        const shortMovies = filteredMovies.filter((movie) => movie.duration <= constants.SHORT_MOVIES_DURATION);
 
         if (shortMovies.length > 0) {
           localStorage.setItem('searchMovies', JSON.stringify(shortMovies));
@@ -87,6 +86,42 @@ function App() {
         }
       }
     }
+  };
+
+  // Обработка поискового запроса по сохранненым фильмам
+  const handleSavedMoviesSearch = (searchData) => {
+    console.log(searchData)
+    // setLoaded(!isLoaded);
+    // setTimeout(setLoaded(!isLoaded), 1000);
+
+    if (searchError) {
+      setSearchError(!searchError);
+    }
+
+    apiMain.getSavedMovies()
+        .then((savedMovies) => {
+          const filteredMovies = savedMovies
+              .filter((movie) => movie.nameRU
+                  .toLowerCase()
+                  .trim()
+                  .includes(searchData.request.toLowerCase().trim()));
+
+          if (filteredMovies.length > 0) {
+            setSavedMovies(filteredMovies);
+          } else {
+            setSearchError(!searchError);
+          }
+
+          if (searchData.switch) {
+            const shortMovies = filteredMovies.filter((movie) => movie.duration <= constants.SHORT_MOVIES_DURATION);
+
+            if (shortMovies.length > 0) {
+              setSavedMovies(filteredMovies);
+            } else {
+              setSearchError(!searchError);
+            }
+          }
+        })
   };
 
   // Сохранение фильма
@@ -108,9 +143,9 @@ function App() {
 
       apiMain.saveMovie(savedMovie)
         .then((saveMovie) => {
-          saveMovie.id = movie.id;
           saveMovie.isSaved = true;
-          setMovies((state) => state.map((m) => (m.id === movie.id ? saveMovie : m)));
+          setMovies((state) => state.map((m) => (m.nameRU === movie.nameRU ? saveMovie : m)));
+          setSavedMovies([...savedMovies, saveMovie]);
         })
         .catch((err) => {
           console.log(err);
@@ -118,9 +153,9 @@ function App() {
     } else {
       apiMain.deleteMovie(movie._id)
         .then((deleteMovie) => {
-          deleteMovie.id = movie.id;
           deleteMovie.isSaved = false;
-          setMovies((state) => state.map((m) => (m.id === movie.id ? deleteMovie : m)));
+          setMovies((state) => state.map((m) => (m.nameRU === movie.nameRU ? deleteMovie : m)));
+          setSavedMovies((state) => state.filter((m) => m.movieId !== movie.movieId));
         })
         .catch((err) => {
           console.log(err);
@@ -132,7 +167,7 @@ function App() {
   const handleRegistration = (registrationData) => {
     apiAuth.register(registrationData)
       .then(() => {
-        history.push('/signin');
+        history.push('/movies');
       }).catch((err) => {
         console.log(err);
       });
@@ -142,10 +177,10 @@ function App() {
   const handleLogin = (loginData) => {
     apiAuth.login(loginData)
       .then((data) => {
-        // setLogin(!loggedIn);
+        setLogin(!loggedIn);
         localStorage.setItem('token', data.token);
         apiMain.getToken(data.token);
-        history.push('/');
+        history.push('/movies');
       })
       .catch((err) => {
         console.log(err);
@@ -172,7 +207,7 @@ function App() {
       apiMain.getTokenValid(token)
         .then((data) => {
           setLogin(!loggedIn);
-          history.push('/movies');
+          history.push('/');
         })
         .catch((err) => {
           console.log(err);
@@ -183,8 +218,11 @@ function App() {
   // Выход из программы
   const signOut = () => {
     setLogin(!loggedIn);
-    localStorage.removeItem('token');
-    history.push('/signin');
+    localStorage.clear();
+    setCurrentUser({});
+    setMovies([]);
+    setSavedMovies([]);
+    history.push('/signup');
   };
 
   useEffect(() => {
@@ -208,6 +246,7 @@ function App() {
               movie.isSaved = true;
             });
           }
+          setSavedMovies(savedMovies);
 
           const markIdAndIsSaved = (prevReqMovies) => {
             prevReqMovies.forEach((movie) => {
@@ -236,9 +275,7 @@ function App() {
           const savedPrevRequest = JSON.parse(localStorage.getItem('searchRequest'));
 
           if (savedPrevMovies) {
-            setLoaded(!isLoaded);
             setMovies(markIdAndIsSaved(savedPrevMovies));
-            setSearchRequest(savedPrevRequest);
           }
         })
         .catch((err) => {
@@ -278,17 +315,16 @@ function App() {
               isLoaded={isLoaded}
               onSearch={handleSearch}
               movies={movies}
-              searchRequest={searchRequest}
               handleSaveMovies={handleSaveMovie}
               searchError={searchError}
             />
             <ProtectedRoute
               path="/saved-movies"
               component={SavedMovies}
-              onSearch={handleSearch}
-              movies={movies}
-              setSearchRequest={setSearchRequest}
+              onSearch={handleSavedMoviesSearch}
+              movies={savedMovies}
               handleSaveMovies={handleSaveMovie}
+              searchError={searchError}
             />
             <ProtectedRoute
               path="/profile"

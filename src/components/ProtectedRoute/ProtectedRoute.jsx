@@ -6,7 +6,7 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
     const value = useContext(AppContext);
     return (
         <Route>
-            {() => (value.loggedIn ? <Component {...props} /> : <Redirect to="/signin" />)}
+            {() => (value.loggedIn ? <Component {...props} /> : <Redirect to="/" />)}
         </Route>
     );
 };

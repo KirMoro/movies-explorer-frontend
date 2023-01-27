@@ -46,7 +46,7 @@ class MainApi {
   }
 
   setProfile(body) {
-    return this._fetch('users/me', 'POST', body);
+    return this._fetch('users/me', 'PATCH', body);
   }
 
   saveMovie(body) {

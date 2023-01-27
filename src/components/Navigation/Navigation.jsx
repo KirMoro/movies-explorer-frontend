@@ -9,7 +9,7 @@ export const Navigation = ({onOpenMenu}) => {
 
     return (
         <nav className="navigation">
-            {location.pathname === '/' && (
+            {!appContext.loggedIn && location.pathname === '/' && (
                 <>
                     <ul className="navigation__list">
                         <li>
@@ -27,7 +27,7 @@ export const Navigation = ({onOpenMenu}) => {
                     </Link>
                 </>
             )}
-            {(appContext.loggedIn && location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile') && (
+            {(appContext.loggedIn && location.pathname === '/' || location.pathname === '/movies' || location.pathname === '/saved-movies' || location.pathname === '/profile') && (
                 <>
                     <ul className="navigation__list navigation__list_type_movies">
                         <li>

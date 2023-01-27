@@ -2,11 +2,12 @@ import './MoviesCardList.css';
 import {MoviesCard} from "../MoviesCard/MoviesCard";
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {constants} from "../../../utils/constants";
 
 export const MoviesCardList = ({movies, onSave, searchError }) => {
     const [index, setIndex] = useState({
-        start: 12,
-        load: 3,
+        start: constants.INITIAL_MOVIES_CARDS_L,
+        load: constants.ADD_MOVIES_CARDS_L,
     });
     const [loadMore, setLoadMore] = useState(true);
 
@@ -15,22 +16,22 @@ export const MoviesCardList = ({movies, onSave, searchError }) => {
     const handleRenderCounter = (movies) => {
         if (window.innerWidth > 1196) {
             setIndex({
-                start: 12,
-                load: 3,
+                start: constants.INITIAL_MOVIES_CARDS_L,
+                load: constants.ADD_MOVIES_CARDS_L,
             })
         }
 
         if (window.innerWidth < 1200) {
             setIndex({
-                start: 8,
-                load: 2,
+                start: constants.INITIAL_MOVIES_CARDS_M,
+                load: constants.ADD_MOVIES_CARDS_M,
             })
         }
 
         if (window.innerWidth < 767) {
             setIndex({
-                start: 5,
-                load: 1,
+                start: constants.INITIAL_MOVIES_CARDS_S,
+                load: constants.ADD_MOVIES_CARDS_S,
             })
         }
     };
@@ -85,7 +86,7 @@ export const MoviesCardList = ({movies, onSave, searchError }) => {
                         {movies.map((movie) => (
                             <MoviesCard
                                 onSave={onSave}
-                                key={(movie.id)}
+                                key={(movie._id)}
                                 movie={movie}
                             />
                         ))}
