@@ -20,7 +20,7 @@ import { apiAuth } from '../../utils/apiAuth';
 import { apiMovies } from '../../utils/MoviesApi';
 import { apiMain } from '../../utils/MainApi';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
-import {constants} from "../../utils/constants";
+import { constants } from '../../utils/constants';
 
 function App() {
   const [loggedIn, setLogin] = useState(false);
@@ -64,10 +64,10 @@ function App() {
 
       if (localMovies) {
         const filteredMovies = localMovies
-            .filter((movie) => movie.nameRU
-                .toLowerCase()
-                .trim()
-                .includes(searchData.request.toLowerCase().trim()));
+          .filter((movie) => movie.nameRU
+            .toLowerCase()
+            .trim()
+            .includes(searchData.request.toLowerCase().trim()));
 
         if (filteredMovies.length > 0) {
           localStorage.setItem('searchMovies', JSON.stringify(filteredMovies));
@@ -88,7 +88,7 @@ function App() {
         }
       }
       setLoaded(false);
-    }
+    };
 
     setTimeout(fucn, 500);
   };
@@ -102,29 +102,29 @@ function App() {
     }
 
     apiMain.getSavedMovies()
-        .then((savedMovies) => {
-          const filteredMovies = savedMovies
-              .filter((movie) => movie.nameRU
-                  .toLowerCase()
-                  .trim()
-                  .includes(searchData.request.toLowerCase().trim()));
+      .then((savedMovies) => {
+        const filteredMovies = savedMovies
+          .filter((movie) => movie.nameRU
+            .toLowerCase()
+            .trim()
+            .includes(searchData.request.toLowerCase().trim()));
 
-          if (filteredMovies.length > 0) {
+        if (filteredMovies.length > 0) {
+          setSavedMovies(filteredMovies);
+        } else {
+          setSearchError(!searchError);
+        }
+
+        if (searchData.switch) {
+          const shortMovies = filteredMovies.filter((movie) => movie.duration <= constants.SHORT_MOVIES_DURATION);
+
+          if (shortMovies.length > 0) {
             setSavedMovies(filteredMovies);
           } else {
             setSearchError(!searchError);
           }
-
-          if (searchData.switch) {
-            const shortMovies = filteredMovies.filter((movie) => movie.duration <= constants.SHORT_MOVIES_DURATION);
-
-            if (shortMovies.length > 0) {
-              setSavedMovies(filteredMovies);
-            } else {
-              setSearchError(!searchError);
-            }
-          }
-        })
+        }
+      });
   };
 
   // Сохранение фильма
@@ -206,17 +206,17 @@ function App() {
   function tokenCheck() {
     const token = localStorage.getItem('token');
 
-    if (token && location.pathname !== "/*") {
-        apiMain.getToken(token);
-        apiMain.getTokenValid(token)
-            .then((data) => {
-              setLogin(!loggedIn);
-              // history.push('/');
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-      }
+    if (token && location.pathname !== '/*') {
+      apiMain.getToken(token);
+      apiMain.getTokenValid(token)
+        .then((data) => {
+          setLogin(!loggedIn);
+          // history.push('/');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   // Выход из программы
@@ -230,7 +230,7 @@ function App() {
   };
 
   useEffect(() => {
-      tokenCheck();
+    tokenCheck();
   }, []);
 
   // Загрузка данных с сервера
