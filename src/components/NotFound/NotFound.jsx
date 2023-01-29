@@ -8,9 +8,9 @@ export const NotFound = () => {
         <section className="notfound">
            <h2 className="notfound__title">404</h2>
             <p className="notfound__subtitle">Страница не найдена</p>
-            <Link
+            <button
                 onClick={() => {history.goBack()}}
-                className="notfound__link">Назад</Link>
+                className="notfound__button">Назад</button>
         </section>
     );
 };
