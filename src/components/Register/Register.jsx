@@ -1,9 +1,12 @@
 import './Register.css';
-import {Link} from "react-router-dom";
-import {useState} from "react";
+import {Link, Redirect} from "react-router-dom";
+import {useContext, useState} from "react";
 import {useFormValidation} from "../hooks/useFormValidation";
+import {AppContext} from "../../contexts/AppContext";
 
 export const Register = ({onRegister}) => {
+    const value = useContext(AppContext);
+
     const [form, setForm] = useState({
         name: "",
         email: "",
@@ -33,7 +36,7 @@ export const Register = ({onRegister}) => {
         onRegister(form);
     }
 
-    return (
+    return (!value.loggedIn ?
         <section className="register">
             <Link
                 to="/"
@@ -130,7 +133,7 @@ export const Register = ({onRegister}) => {
                     </Link>
                 </p>
             </form>
-        </section>
+        </section> : <Redirect to="/movies"/>
     );
 };
 

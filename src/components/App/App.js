@@ -125,6 +125,7 @@ function App() {
           }
         }
       });
+    setLoaded(false);
   };
 
   // Сохранение фильма
@@ -170,7 +171,10 @@ function App() {
   const handleRegistration = (registrationData) => {
     apiAuth.register(registrationData)
       .then(() => {
-        history.push('/movies');
+        handleLogin({
+          email: registrationData.email,
+          password: registrationData.password,
+        })
       }).catch((err) => {
         console.log(err);
       });
@@ -195,7 +199,6 @@ function App() {
     apiMain.setProfile(profileData)
       .then((data) => {
         setCurrentUser(data);
-        history.push('/movies');
       })
       .catch((err) => {
         console.log(err);
@@ -226,7 +229,7 @@ function App() {
     setCurrentUser({});
     setMovies([]);
     setSavedMovies([]);
-    history.push('/signup');
+    history.push('/');
   };
 
   useEffect(() => {
