@@ -130,6 +130,7 @@ function App() {
 
   // Сохранение фильма
   const handleSaveMovie = (movie) => {
+    console.log('movie', movie)
     if (!movie.isSaved) {
       const savedMovie = {
         country: movie.country,
@@ -139,7 +140,7 @@ function App() {
         description: movie.description,
         image: `https://api.nomoreparties.co${movie.image.url}`,
         trailerLink: movie.trailerLink,
-        thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
+        thumbnail: `https://api.nomoreparties.co${movie.image.url}`,
         movieId: movie.id,
         nameRU: movie.nameRU,
         nameEN: movie.nameEN,
@@ -148,7 +149,15 @@ function App() {
       apiMain.saveMovie(savedMovie)
         .then((saveMovie) => {
           saveMovie.isSaved = true;
-          setMovies((state) => state.map((m) => (m.nameRU === movie.nameRU ? saveMovie : m)));
+          setMovies((state) => state.map((m) => {
+            if (m.nameRU === movie.nameRU) {
+              m.isSaved = true;
+              m.id = movie.id;
+              m._id = saveMovie._id;
+            }
+            return m;
+          }));
+          // localStorage.setItem('movies',)
           setSavedMovies([...savedMovies, saveMovie]);
         })
         .catch((err) => {
@@ -157,8 +166,15 @@ function App() {
     } else {
       apiMain.deleteMovie(movie._id)
         .then((deleteMovie) => {
+          console.log(deleteMovie)
           deleteMovie.isSaved = false;
-          setMovies((state) => state.map((m) => (m.nameRU === movie.nameRU ? deleteMovie : m)));
+          setMovies((state) => state.map((m) => {
+            if (m.nameRU === deleteMovie.nameRU) {
+              m.isSaved = false;
+              m.id = deleteMovie.movieId;
+              m._id = deleteMovie._id;
+            }
+          }));
           setSavedMovies((state) => state.filter((m) => m.movieId !== movie.movieId));
         })
         .catch((err) => {
@@ -184,9 +200,9 @@ function App() {
   const handleLogin = (loginData) => {
     apiAuth.login(loginData)
       .then((data) => {
-        setLogin(!loggedIn);
         localStorage.setItem('token', data.token);
         apiMain.getToken(data.token);
+        setLogin(true);
         history.push('/movies');
       })
       .catch((err) => {
@@ -213,8 +229,7 @@ function App() {
       apiMain.getToken(token);
       apiMain.getTokenValid(token)
         .then((data) => {
-          setLogin(!loggedIn);
-          // history.push('/');
+          setLogin(true);
         })
         .catch((err) => {
           console.log(err);
@@ -224,7 +239,7 @@ function App() {
 
   // Выход из программы
   const signOut = () => {
-    setLogin(!loggedIn);
+    setLogin(false);
     localStorage.clear();
     setCurrentUser({});
     setMovies([]);
@@ -239,6 +254,7 @@ function App() {
   // Загрузка данных с сервера
   useEffect(() => {
     if (loggedIn) {
+
       const initialPromises = Promise.all([
         apiMain.getProfileInfo(),
         apiMovies.getMovies(),
@@ -253,6 +269,7 @@ function App() {
               movie.isSaved = true;
             });
           }
+
           setSavedMovies(savedMovies);
 
           const markIdAndIsSaved = (prevReqMovies) => {
@@ -267,22 +284,13 @@ function App() {
             return prevReqMovies;
           };
 
-          movies.forEach((movie) => {
-            savedMovies.forEach((savedMovie) => {
-              if (movie.nameRU === savedMovie.nameRU) {
-                movie._id = savedMovie._id;
-                movie.isSaved = true;
-              }
-            });
-          });
-
-          localStorage.setItem('movies', JSON.stringify(markIdAndIsSaved(movies)));
-
           const savedPrevMovies = JSON.parse(localStorage.getItem('searchMovies'));
 
           if (savedPrevMovies) {
             setMovies(markIdAndIsSaved(savedPrevMovies));
           }
+
+          localStorage.setItem('movies', JSON.stringify(markIdAndIsSaved(movies)));
         })
         .catch((err) => {
           console.log(err);
