@@ -121,7 +121,7 @@ export const Register = ({onRegister}) => {
                     className="register__form-button"
                     aria-label="submit-button"
                 >
-                    Редактировать
+                    Зарегистрироваться
                 </button>}
                 <p className="register__form-link-text">
                     Уже зарегистрированы?
