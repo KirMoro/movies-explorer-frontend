@@ -53,7 +53,7 @@ export const Profile = ({onSave, onSignOut}) => {
                             onChange={handleChange}
                             onBlur={onBlurField}
                             className="profile__form-input"
-                            value={form.name || ''}
+                            value={currentUserContext.name || ''}
                         />
                         {errors.name.dirty && errors.name.error ? (
                             <p className="profile__form-error">{errors.name.message}</p>
@@ -71,7 +71,7 @@ export const Profile = ({onSave, onSignOut}) => {
                             onChange={handleChange}
                             onBlur={onBlurField}
                             className="profile__form-input"
-                            value={form.email || ''}
+                            value={currentUserContext.email || ''}
                         />
                         {errors.email.dirty && errors.email.error ? (
                             <p className="profile__form-error">{errors.email.message}</p>
