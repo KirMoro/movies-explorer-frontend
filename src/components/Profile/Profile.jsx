@@ -1,5 +1,5 @@
 import './Profile.css';
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 import {useFormValidation} from "../hooks/useFormValidation";
 
@@ -7,9 +7,10 @@ export const Profile = ({onSave, onSignOut}) => {
     const currentUserContext = useContext(CurrentUserContext);
 
     const [form, setForm] = useState({
-        name: currentUserContext.name,
-        email: currentUserContext.email,
+        name: '',
+        email: '',
     });
+    const [updateProfile, setUpdateProfile] = useState(false);
     const { errors, validateForm, onBlurField } = useFormValidation(form);
 
     const handleChange = e => {
@@ -30,8 +31,16 @@ export const Profile = ({onSave, onSignOut}) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        onSave(form);
+        onSave(form, setUpdateProfile);
     }
+
+    useEffect(() => {
+        setForm({
+                name: currentUserContext.name,
+                email: currentUserContext.email,
+            });
+    }, [currentUserContext]);
+
 
     return (
         <section className="profile">
@@ -53,7 +62,7 @@ export const Profile = ({onSave, onSignOut}) => {
                             onChange={handleChange}
                             onBlur={onBlurField}
                             className="profile__form-input"
-                            value={currentUserContext.name || ''}
+                            value={form.name}
                         />
                         {errors.name.dirty && errors.name.error ? (
                             <p className="profile__form-error">{errors.name.message}</p>
@@ -71,13 +80,14 @@ export const Profile = ({onSave, onSignOut}) => {
                             onChange={handleChange}
                             onBlur={onBlurField}
                             className="profile__form-input"
-                            value={currentUserContext.email || ''}
+                            value={form.email}
                         />
                         {errors.email.dirty && errors.email.error ? (
                             <p className="profile__form-error">{errors.email.message}</p>
                         ) : null}
                     </label>
                 </fieldset>
+                {updateProfile && (<p className="profile__form-success">Данные профиля успешно обновлены</p>)}
                 {(form.email === currentUserContext.email && form.name === currentUserContext.name || errors.name.dirty && errors.name.error || errors.email.dirty && errors.email.error) ? (
                     <button
                         type="submit"

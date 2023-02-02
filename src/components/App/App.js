@@ -225,10 +225,11 @@ function App() {
   };
 
   // Авторизация пользователя
-  const handleChangeProfile = (profileData) => {
+  const handleChangeProfile = (profileData, updateCallBack) => {
     apiMain.setProfile(profileData)
       .then((data) => {
         setCurrentUser(data);
+        updateCallBack(true);
       })
       .catch((err) => {
         console.log(err);
@@ -243,6 +244,7 @@ function App() {
       apiMain.getToken(token);
       apiMain.getTokenValid(token)
         .then((data) => {
+          console.log(data)
           setLogin(true);
         })
         .catch((err) => {
