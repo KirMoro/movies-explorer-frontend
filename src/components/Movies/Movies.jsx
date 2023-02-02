@@ -16,11 +16,6 @@ export const Movies = ({isLoaded, onSearch, movies, handleSaveMovies, searchErro
                 movies={movies}
                 searchError={searchError}
             />}
-            {/*{isLoaded ? <MoviesCardList*/}
-            {/*            onSave={handleSaveMovies}*/}
-            {/*            movies={movies}*/}
-            {/*            searchError={searchError}*/}
-            {/*        /> : <Preloader />}*/}
         </section>
     );
 };

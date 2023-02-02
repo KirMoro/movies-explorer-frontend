@@ -4,7 +4,7 @@ import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {constants} from "../../../utils/constants";
 
-export const MoviesCardList = ({movies, onSave, searchError }) => {
+export const MoviesCardList = ({movies, onSave, searchError, searchSaveError }) => {
     const [index, setIndex] = useState({
         start: constants.INITIAL_MOVIES_CARDS_L,
         load: constants.ADD_MOVIES_CARDS_L,
@@ -81,7 +81,7 @@ export const MoviesCardList = ({movies, onSave, searchError }) => {
                     </button>}
                 </>
             )}
-            {location.pathname === '/saved-movies' && !searchError && (
+            {location.pathname === '/saved-movies' && !searchSaveError && (
                     <ul className="moviescardlist">
                         {movies.map((movie) => (
                             <MoviesCard
@@ -92,7 +92,7 @@ export const MoviesCardList = ({movies, onSave, searchError }) => {
                         ))}
                     </ul>
             )}
-            {searchError && (
+            {searchError || searchSaveError && (
                 <div className="article">
                     <h2 className="article__title">Ничего не найдено</h2>
                 </div>
