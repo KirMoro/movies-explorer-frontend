@@ -53,7 +53,7 @@ function App() {
   // Обработка поискового запроса
   const handleSearch = (searchData) => {
     setLoaded(true);
-    setMovies([])
+    setMovies([]);
 
     if (searchError) {
       setSearchError(!searchError);
@@ -75,37 +75,37 @@ function App() {
       localStorage.setItem('searchRequest', JSON.stringify(searchData));
 
       apiMovies.getMovies()
-          .then((movies) => {
-            const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
-            const markedMovies = markIdAndIsSaved(movies, savedMovies);
-            const filteredMovies = markedMovies
-                .filter((movie) => movie.nameRU
-                    .toLowerCase()
-                    .trim()
-                    .includes(searchData.request.toLowerCase().trim()));
+        .then((movies) => {
+          const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+          const markedMovies = markIdAndIsSaved(movies, savedMovies);
+          const filteredMovies = markedMovies
+            .filter((movie) => movie.nameRU
+              .toLowerCase()
+              .trim()
+              .includes(searchData.request.toLowerCase().trim()));
 
-            if (filteredMovies.length > 0) {
-              localStorage.setItem('searchMovies', JSON.stringify(filteredMovies));
-              // localStorage.setItem('savedMovies', JSON.stringify(filteredMovies));
-              setMovies(filteredMovies);
+          if (filteredMovies.length > 0) {
+            localStorage.setItem('searchMovies', JSON.stringify(filteredMovies));
+            // localStorage.setItem('savedMovies', JSON.stringify(filteredMovies));
+            setMovies(filteredMovies);
+          } else {
+            setSearchError(!searchError);
+          }
+
+          if (searchData.switch) {
+            const shortMovies = filteredMovies.filter((movie) => movie.duration <= constants.SHORT_MOVIES_DURATION);
+
+            if (shortMovies.length > 0) {
+              localStorage.setItem('searchMovies', JSON.stringify(shortMovies));
+              // localStorage.setItem('savedMovies', JSON.stringify(shortMovies));
+              setMovies(shortMovies);
             } else {
               setSearchError(!searchError);
             }
-
-            if (searchData.switch) {
-              const shortMovies = filteredMovies.filter((movie) => movie.duration <= constants.SHORT_MOVIES_DURATION);
-
-              if (shortMovies.length > 0) {
-                localStorage.setItem('searchMovies', JSON.stringify(shortMovies));
-                // localStorage.setItem('savedMovies', JSON.stringify(shortMovies));
-                setMovies(shortMovies);
-              } else {
-                setSearchError(!searchError);
-              }
-            }
-          })
-      setLoaded(false);
           }
+        });
+      setLoaded(false);
+    };
 
     setTimeout(setSearchMovie, 500);
   };
@@ -119,28 +119,29 @@ function App() {
     }
 
     const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+    console.log('saved', savedMovies);
 
     const filteredMovies = savedMovies
-        .filter((movie) => movie.nameRU
-            .toLowerCase()
-            .trim()
-            .includes(searchData.request.toLowerCase().trim()));
+      .filter((movie) => movie.nameRU
+        .toLowerCase()
+        .trim()
+        .includes(searchData.request.toLowerCase().trim()));
 
-        if (filteredMovies.length !== 0) {
-          setSavedMovies(filteredMovies);
-        } else {
-          setSearchSaveError(true);
-        }
+    if (filteredMovies.length !== 0) {
+      setSavedMovies(filteredMovies);
+    } else {
+      setSearchSaveError(true);
+    }
 
-        if (searchData.switch) {
-          const shortMovies = filteredMovies.filter((movie) => movie.duration <= constants.SHORT_MOVIES_DURATION);
+    if (searchData.switch) {
+      const shortMovies = filteredMovies.filter((movie) => movie.duration <= constants.SHORT_MOVIES_DURATION);
 
-          if (shortMovies.length !== 0) {
-            setSavedMovies(filteredMovies);
-          } else {
-            setSearchSaveError(true);
-          }
-        }
+      if (shortMovies.length !== 0) {
+        setSavedMovies(filteredMovies);
+      } else {
+        setSearchSaveError(true);
+      }
+    }
     setLoaded(false);
   };
 
@@ -186,7 +187,7 @@ function App() {
               m.isSaved = false;
               m._id = deleteMovie._id;
             }
-            return m
+            return m;
           }));
           localStorage.setItem('searchMovies', JSON.stringify(movies));
           setSavedMovies((state) => state.filter((m) => m._id !== movie._id));
@@ -204,7 +205,7 @@ function App() {
         handleLogin({
           email: registrationData.email,
           password: registrationData.password,
-        })
+        });
       }).catch((err) => {
         console.log(err);
       });
@@ -244,7 +245,6 @@ function App() {
       apiMain.getToken(token);
       apiMain.getTokenValid(token)
         .then((data) => {
-          console.log(data)
           setLogin(true);
         })
         .catch((err) => {
@@ -270,7 +270,6 @@ function App() {
   // Загрузка данных с сервера
   useEffect(() => {
     if (loggedIn) {
-
       const initialPromises = Promise.all([
         apiMain.getProfileInfo(),
         apiMain.getSavedMovies(),
