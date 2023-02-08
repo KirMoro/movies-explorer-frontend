@@ -64,14 +64,28 @@
   text-align: right;
 }
 
+.profile__form-input::placeholder {
+  color: black;
+}
+
 .profile__form-button {
+  width: 396px;
+  height: 45px;
   border: none;
+  border-radius: 3px;
   margin: 0 0 16px;
-  background: transparent;
+  background: #3456f3;
+  color: white;
   cursor: pointer;
   font-size: 13px;
   font-weight: 400;
   line-height: 16px;
+}
+
+.profile__form-button:disabled {
+  background: transparent;
+  color: black;
+  cursor: default;
 }
 
 .profile__form-button_type_active {
@@ -95,13 +109,34 @@
 
 .profile__form-link {
   padding: 0;
+  border: none;
   margin: 0;
+  background: transparent;
   color: #ee3465;
   font-size: 13px;
   font-style: normal;
   font-weight: 500;
   line-height: 16px;
   text-decoration: none;
+}
+
+.profile__form-error {
+  padding: 0;
+  margin: 6px 0 0;
+  color: #ee3465;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12px;
+}
+
+.profile__form-success {
+  padding: 0;
+  margin: 6px 0 0;
+  color: #078c45;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 29px;
+  text-align: center;
 }
 
 @media screen and (max-width: 769px) {

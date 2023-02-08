@@ -75,6 +75,12 @@
   line-height: 17px;
 }
 
+.login__form-button:disabled {
+  background: #f8f8f8;
+  color: #c2c2c2;
+  cursor: default;
+}
+
 .login__form-link {
   padding: 0;
   margin: 0 0 0 6px;
@@ -98,6 +104,15 @@
   text-align: center;
 }
 
+.login__form-error {
+  padding: 0;
+  margin: 6px 0 0;
+  color: #ee3465;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 12px;
+}
+
 @media screen and (max-width: 769px) {
   .login {
     margin: 232px 0 0;
@@ -107,7 +122,7 @@
 @media screen and (max-width: 650px) {
   .login {
     align-items: center;
-    margin: 56px 0 0 0;
+    margin: 56px 0 0;
   }
 
   .login__form {

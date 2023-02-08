@@ -24,9 +24,11 @@
   text-align: center;
 }
 
-.notfound__link {
+.notfound__button {
   padding: 0;
   margin: 0 0 60px;
+  background: transparent;
+  border: none;
   color: #3456f3;
   font-size: 14px;
   font-weight: 400;
